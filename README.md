@@ -106,7 +106,9 @@ kubectl port-forward service/kube-stack-prometheus-grafana  -n monitoring 8081:8
 kubectl port-forward service/kube-stack-prometheus-kube-prometheus -n monitoring 9090:9090
 ```
 
-## Step 3:  Bootstrap Management Cluster with ClusterAPI
+## Step 3:  Installing Thanos
+
+## Step 4:  Bootstrap Management Cluster with ClusterAPI
 
 To initialize the AKS cluster with Cluster API and turn it into the management cluster, follow these instructions. Once initialized, the management cluster will allow you to control and maintain a fleet of ephemeral clusters.
 
@@ -152,7 +154,4 @@ clusterctl init --infrastructure azure
 
 # Create and apply an AzureClusterIdentity
 envsubst < manifests/templates/aks-cluster-identity.yaml | kubectl apply -f -
-
-
-
 ``
