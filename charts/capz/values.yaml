@@ -1,0 +1,17 @@
+name:
+servicesCidrBlock: 10.0.0.0/16
+location: southcentralus
+clusterResourceGroup:
+subscriptionId:
+k8sVersion: v1.22.6
+networkPlugin: none
+controlAgentPoolName: clagentpool
+controlAgentPoolNodes: 2
+controlAgentPoolNodeSize: Standard_D2s_v3
+controlAgentDiskSizeGB: 30
+workerAgentPoolName: wragentpool
+workerAgentPoolNodes: 1
+workerAgentPoolNodeSize: Standard_D2s_v3
+workerAgentDiskSizeGB: 40
+virtualNetwork:
+  name: secure-vnet
