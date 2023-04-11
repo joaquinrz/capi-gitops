@@ -15,3 +15,5 @@ workerAgentPoolNodeSize: Standard_D2s_v3
 workerAgentDiskSizeGB: 40
 virtualNetwork:
   name: secure-vnet
+dataSecretName:
+sshPublicKey:
