@@ -17,4 +17,3 @@ virtualNetwork:
   name: secure-vnet
 dataSecretName:
 sshPublicKey:
-
