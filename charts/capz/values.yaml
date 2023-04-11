@@ -1,4 +1,4 @@
-name:
+name: worker
 servicesCidrBlock: 10.0.0.0/16
 location: southcentralus
 clusterResourceGroup:
@@ -15,3 +15,5 @@ workerAgentPoolNodeSize: Standard_D2s_v3
 workerAgentDiskSizeGB: 40
 virtualNetwork:
   name: secure-vnet
+dataSecretName:
+sshPublicKey:
