@@ -1,8 +1,10 @@
-name: Helm Release
+name: CAPZ Helm Release
 on:
   push:
     branches:
-      - dev
+      - main
+    paths:
+    - 'charts/capz/**'
 jobs:
   release:
     runs-on: ubuntu-latest
