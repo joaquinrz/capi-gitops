@@ -8,8 +8,7 @@ rbac:
 grafana.ini:
   users:
     viewers_can_edit: true
-  auth:
-    anonymous:
+  auth.anonymous:
       enabled: true
 datasources:
  datasources.yaml:
