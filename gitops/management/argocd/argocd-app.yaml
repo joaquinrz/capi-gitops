@@ -14,7 +14,7 @@ spec:
     chart: argo-cd
     helm:
       valueFiles:
-      - $values/argocd-initial-values.yaml
+      - $values/values/argocd/argocd-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
     targetRevision: alessandro
     ref: values
