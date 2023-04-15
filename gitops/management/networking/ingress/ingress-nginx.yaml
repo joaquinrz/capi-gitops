@@ -14,7 +14,7 @@ spec:
     chart: ingress-nginx
     helm:
       valueFiles:
-      - $values/gitops/management/argocd/argocd-values.yaml
+      - $values/gitops/management/networking/ingress/ingress-nginx-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
     targetRevision: alessandro
     ref: values

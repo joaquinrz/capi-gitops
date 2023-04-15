@@ -9,6 +9,8 @@ extraObjects:
         - resources-finalizer.argocd.argoproj.io
     spec:
       description: Infrastructure components
+      sourceNamespaces:
+      - "*"
       clusterResourceWhitelist:
       - group: '*'
         kind: '*'
