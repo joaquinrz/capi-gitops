@@ -23,7 +23,7 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+    - ApplyOutOfSyncOnly=true
     retry:
       limit: -1 # number of failed sync attempt retries; unlimited number of attempts if less than 0
       backoff:
