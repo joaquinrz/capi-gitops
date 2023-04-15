@@ -1,0 +1,7 @@
+provider: pdns
+txtOwnerId: "hub"
+domainFilters:
+- gp.prd.analytics.atradiusnet.com
+pdns:
+  apiUrl: "http://10.224.48.132"
+  secretName: "external-dns"
