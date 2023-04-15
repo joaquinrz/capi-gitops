@@ -16,7 +16,7 @@ spec:
   sources:
   - repoURL: 'https://charts.bitnami.com/bitnami'
     targetRevision: 6.18.0
-    chart: ingress-nginx
+    chart: external-dns
     helm:
       valueFiles:
       - $values/gitops/management/networking/external-dns/external-dns-values.yaml
