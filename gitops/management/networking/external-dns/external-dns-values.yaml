@@ -1,7 +1,11 @@
+azure:
+  resourceGroup: dns
+  tenantId: 30c10907-19b2-4fb8-9272-a4a539628560
+  subscriptionId: 1c51d1c3-d83d-4d71-ace1-df3496eddac4
+  useManagedIdentityExtension: true
+  userAssignedIdentityID: "/subscriptions/1c51d1c3-d83d-4d71-ace1-df3496eddac4/resourcegroups/clusters/providers/Microsoft.ManagedIdentity/userAssignedIdentities/gitops"
 provider: azure
 txtOwnerId: "management"
 domainFilters:
 - kubespaces.io
-azure:
-  useManagedIdentityExtension: true
-  userAssignedIdentityID: "/subscriptions/1c51d1c3-d83d-4d71-ace1-df3496eddac4/resourcegroups/clusters/providers/Microsoft.ManagedIdentity/userAssignedIdentities/gitops"
+
