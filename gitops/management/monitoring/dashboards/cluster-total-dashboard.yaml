@@ -1640,7 +1640,7 @@ data:
                 "multi": false,
                 "name": "cluster",
                 "options": [ ],
-                "query": "label_values(up{job=\"cadvisor\"}, cluster)",
+                "query": "label_values(up{job=\"apiserver\"}, cluster)",
                 "refresh": 2,
                 "regex": "",
                 "sort": 0,
@@ -1689,5 +1689,5 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-    grafana_dashboards: "1"
+    grafana_dashboard: "1"
   name: cluster-total-dashboard
