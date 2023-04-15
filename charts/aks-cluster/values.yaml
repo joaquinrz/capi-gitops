@@ -1,19 +1,9 @@
 name: worker
-servicesCidrBlock: 10.0.0.0/16
 location: southcentralus
-clusterResourceGroup:
+clusterResourceGroupName: worker
 subscriptionId:
-k8sVersion: v1.22.6
-networkPlugin: kubenet
-controlAgentPoolName: clagentpool
+k8sVersion: v1.24.10
 controlAgentPoolNodes: 2
-controlAgentPoolNodeSize: Standard_D2s_v3
-controlAgentDiskSizeGB: 30
-workerAgentPoolName: wragentpool
-workerAgentPoolNodes: 1
-workerAgentPoolNodeSize: Standard_D2s_v3
-workerAgentDiskSizeGB: 40
-virtualNetwork:
-  name: secure-vnet
-dataSecretName:
-sshPublicKey:
+controlAgentPoolNodeSize: Standard_D2s_v5
+workerAgentPoolNodes: 2
+workerAgentPoolNodeSize: Standard_D2s_v5

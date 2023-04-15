@@ -7,7 +7,7 @@ spec:
   clusterNetwork:
     services:
       cidrBlocks:
-      - {{ .Values.servicesCidrBlock }}
+      - 192.168.0.0/16
   controlPlaneRef:
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
     kind: AzureManagedControlPlane
@@ -30,15 +30,10 @@ spec:
     kind: AzureClusterIdentity
     name: cluster-identity
   location: {{ .Values.location }}
-  resourceGroupName: {{ .Values.clusterResourceGroup }}
-  sshPublicKey: {{ .Values.sshPublicKey }}
-  subscriptionID: {{ .Values.subscriptionId }}
+  resourceGroupName: {{ .Values.clusterResourceGroupName }}
+  sshPublicKey: ""
+  subscriptionID: {{ required "A valid .Values.subscriptionId entry required!" .Values.subscriptionId  }}
   version: {{ .Values.k8sVersion }}
-  networkPlugin: {{ .Values.networkPlugin }}
-  # virtualNetwork:
-  #   name: {{ .Values.virtualNetwork.name }}
-  #   cidrBlock: 10.0.0.0/8
-
 ---
 # Due to the nature of managed Kubernetes and the control plane implementation,
 # the infrastructure provider for AKS cluster is basically a no-op.
@@ -54,7 +49,7 @@ metadata:
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachinePool
 metadata:
-  name: {{ .Values.controlAgentPoolName }}
+  name: {{ .Values.name }}-pool0
 spec:
   clusterName: {{ .Values.name }}
   replicas: {{ .Values.controlAgentPoolNodes }}
@@ -62,12 +57,12 @@ spec:
     metadata: {}
     spec:
       bootstrap:
-        dataSecretName: {{ .Values.dataSecretName }}
+        dataSecretName: ""
       clusterName: {{ .Values.name }}
       infrastructureRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
         kind: AzureManagedMachinePool
-        name: {{ .Values.controlAgentPoolName }}
+        name: {{ .Values.name }}-pool0
       version: {{ .Values.k8sVersion }}
 ---
 # The Azure-specific machine pool implementation drives the configuration of the
@@ -75,17 +70,17 @@ spec:
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: AzureManagedMachinePool
 metadata:
-  name: {{ .Values.controlAgentPoolName }}
+  name: {{ .Values.name }}-pool0
 spec:
   mode: System
-  osDiskSizeGB: {{ .Values.controlAgentDiskSizeGB }}
+  name: pool0
   sku: {{ .Values.controlAgentPoolNodeSize }}
 ---
 # Deploy a second agent pool with the same number of machines, but using potentially different infrastructure.
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachinePool
 metadata:
-  name: {{ .Values.workerAgentPoolName }}
+  name: {{ .Values.name }}-pool1
 spec:
   clusterName: {{ .Values.name }}
   replicas: {{ .Values.workerAgentPoolNodes }}
@@ -93,20 +88,20 @@ spec:
     metadata: {}
     spec:
       bootstrap:
-        dataSecretName: {{ .Values.dataSecretName }}
+        dataSecretName: ""
       clusterName: {{ .Values.name }}
       infrastructureRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
         kind: AzureManagedMachinePool
-        name: {{ .Values.workerAgentPoolName }}
+        name: {{ .Values.name }}-pool1
       version: {{ .Values.k8sVersion }}
 ---
 # The infrastructure backing the second pool will use the same VM sku, but a larger OS disk.
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: AzureManagedMachinePool
 metadata:
-  name: {{ .Values.workerAgentPoolName }}
+  name: {{ .Values.name }}-pool1
 spec:
   mode: User
-  osDiskSizeGB: {{ .Values.workerAgentDiskSizeGB }}
+  name: pool1
   sku: {{ .Values.workerAgentPoolNodeSize }}
