@@ -28,7 +28,7 @@ spec:
     chart: thanos
     helm:
       valueFiles:
-      - $values/gitops/management/networking/thanos/thanos-values.yaml
+      - $values/gitops/management/monitoring/thanos/thanos-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
     targetRevision: alessandro
     ref: values
