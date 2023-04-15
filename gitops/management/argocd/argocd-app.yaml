@@ -15,8 +15,8 @@ spec:
     helm:
       valueFiles:
       - $values/argocd-initial-values.yaml
-  - repoURL: https://github.com/joaquinrz/capi-gitops
-    targetRevision: HEAD
+  - repoURL: https://github.com/joaquinrz/capi-gitops.git
+    targetRevision: alessandro
     ref: values
   syncPolicy:
     automated:
