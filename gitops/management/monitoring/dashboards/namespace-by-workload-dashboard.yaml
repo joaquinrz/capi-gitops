@@ -1550,7 +1550,6 @@ data:
     }
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   labels:
-    grafana_dashboards: "1"
-  name: namespace-by-workload
+    grafana_dashboard: "1"
+  name: namespace-by-workload-dashboard
