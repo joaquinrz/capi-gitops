@@ -10,6 +10,14 @@ grafana.ini:
     viewers_can_edit: true
   auth.anonymous:
       enabled: true
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    labelValue: "1"
+    multicluster:
+      global:
+        enabled: false
 datasources:
  datasources.yaml:
    apiVersion: 1
