@@ -14,7 +14,7 @@ spec:
     chart: argo-cd
     helm:
       valueFiles:
-      - values-production.yaml
+      - values.yaml
   syncPolicy:
     automated:
       prune: true
