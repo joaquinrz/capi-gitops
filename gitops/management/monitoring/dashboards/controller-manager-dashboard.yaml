@@ -1036,7 +1036,6 @@ data:
     }
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   labels:
-    grafana_dashboards: "1"
-  name: controller-manager
+    grafana_dashboard: "1"
+  name: controller-manager-dashboard
