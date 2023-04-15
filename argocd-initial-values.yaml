@@ -1,4 +1,6 @@
 configs:
+  rbac:
+    policy.default: 'role:readonly'
   cm:
     users.anonymous.enabled: "true"
     timeout.reconciliation: 10s
