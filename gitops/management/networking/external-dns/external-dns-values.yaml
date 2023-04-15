@@ -1,7 +1,7 @@
-provider: pdns
-txtOwnerId: "hub"
+provider: azure
+txtOwnerId: "management"
 domainFilters:
-- gp.prd.analytics.atradiusnet.com
-pdns:
-  apiUrl: "http://10.224.48.132"
-  secretName: "external-dns"
+- kubespaces.io
+azure:
+  useManagedIdentityExtension: true
+  userAssignedIdentityID: "/subscriptions/1c51d1c3-d83d-4d71-ace1-df3496eddac4/resourcegroups/clusters/providers/Microsoft.ManagedIdentity/userAssignedIdentities/gitops"
