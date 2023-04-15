@@ -17,4 +17,12 @@ entries:
     urls:
     - https://github.com/joaquinrz/capi-gitops/releases/download/aks-cluster-0.0.4/aks-cluster-0.0.4.tgz
     version: 0.0.4
-generated: "2023-04-15T14:28:53.934297716Z"
+  - apiVersion: v2
+    created: "2023-04-15T15:46:56.53961373Z"
+    description: A Helm chart for deploying AKS worker cluster using CAPZ
+    digest: 96c79e34923d6cc31fee4e9e31ff4e740b1a9879f597f124310d8b35c1671619
+    name: aks-cluster
+    urls:
+    - https://github.com/joaquinrz/capi-gitops/releases/download/aks-cluster-0.0.1/aks-cluster-0.0.1.tgz
+    version: 0.0.1
+generated: "2023-04-15T15:46:56.53962193Z"
