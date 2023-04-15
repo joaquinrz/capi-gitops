@@ -66,8 +66,10 @@ helm repo update
 helm upgrade -i -n argocd \
   --version 5.29.1 \
   --create-namespace \
---values gitops/management/argocd/argocd-values.yaml  --values argocd-initial-objects.yaml \
+  --values gitops/management/argocd/argocd-values.yaml \
+  --values argocd-initial-objects.yaml \
   argocd argo/argo-cd
+
 # Verify that ArgoCD is running:
 kubectl get pods -n argocd
 
