@@ -2465,4 +2465,4 @@ kind: ConfigMap
 metadata:
   labels:
     grafana_dashboard: "1"
-  name: k8s-resources-namespace-dashboard
+  name: k8s-resources-namespace-pods-dashboard
