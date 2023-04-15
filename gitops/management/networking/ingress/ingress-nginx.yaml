@@ -2,10 +2,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ingress
-  namespace: argocd
+  namespace: ingress
 spec:
   destination:
-    namespace: argocd
+    namespace: ingress
     server: https://kubernetes.default.svc
   project: infra
   sources:
@@ -23,7 +23,7 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-    - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
     retry:
       limit: -1 # number of failed sync attempt retries; unlimited number of attempts if less than 0
       backoff:
