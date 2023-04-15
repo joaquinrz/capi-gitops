@@ -970,7 +970,6 @@ data:
     }
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   labels:
-    grafana_dashboards: "1"
-  name: scheduler
+    grafana_dashboard: "1"
+  name: scheduler-dashboard
