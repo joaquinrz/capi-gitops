@@ -6,6 +6,7 @@ configs:
     timeout.reconciliation: 10s
   params:
     server.insecure: true
+    application.namespaces: "*"
   repositories:
     gitops:
       url: https://github.com/joaquinrz/capi-gitops.git
