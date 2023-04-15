@@ -2715,5 +2715,5 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-    grafana_dashboards: "1"
-  name: k8s-resources-cluster
+    grafana_dashboard: "1"
+  name: k8s-resources-cluster-dashboard
