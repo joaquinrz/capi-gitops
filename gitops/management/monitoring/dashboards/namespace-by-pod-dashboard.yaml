@@ -1158,7 +1158,7 @@ data:
                 "multi": false,
                 "name": "cluster",
                 "options": [ ],
-                "query": "label_values(up{job=\"cadvisor\"}, cluster)",
+                "query": "label_values(up{job=\"apiserver\"}, cluster)",
                 "refresh": 2,
                 "regex": "",
                 "sort": 0,
