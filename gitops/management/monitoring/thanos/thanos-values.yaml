@@ -1,3 +1,9 @@
+objstoreConfig: |-
+  type: FILESYSTEM
+  config:
+    directory: "/var/thanos/receive/data"
+  prefix: 
+
 ruler:
   enabled: true
   
@@ -51,7 +57,7 @@ compactor:
   persistence:
     ## @param compactor.persistence.enabled Enable data persistence using PVC(s) on Thanos Compactor pods
     ##
-    enabled: false
+    enabled: true
 
 storegateway:
   enabled: true
