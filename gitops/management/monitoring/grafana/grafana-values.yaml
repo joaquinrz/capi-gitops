@@ -1,5 +1,7 @@
+adminPassword: prom-operator
 env:
   GF_USERS_VIEWERS_CAN_EDIT: true
+  GF_AUTH_ANONYMOUS_ORG_NAME: "Main Org."
 persistence:
   type: pvc
   enabled: true
