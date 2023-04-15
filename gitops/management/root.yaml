@@ -9,11 +9,11 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: apps
-    targetRevision: HEAD
+    path: gitops/management
+    targetRevision: alessandro
     directory:
       recurse: true
-    repoURL: https://github.com/ams0/argocd-apps
+    repoURL: https://github.com/joaquinrz/capi-gitops
   syncPolicy:
     automated:
       prune: true
