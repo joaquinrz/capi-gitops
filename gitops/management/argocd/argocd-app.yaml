@@ -8,13 +8,16 @@ spec:
     namespace: argocd
     server: https://kubernetes.default.svc
   project: infra
-  source:
-    repoURL: "https://argoproj.github.io/argo-helm"
-    targetRevision: "5.29.1"
+  sources:
+  - repoURL: 'https://argoproj.github.io/argo-helm'
+    targetRevision: 5.29.1
     chart: argo-cd
     helm:
       valueFiles:
-      - values.yaml
+      - $values/gitops/management/argocd/values.yaml
+  - repoURL: https://github.com/joaquinrz/capi-gitops
+    targetRevision: HEAD
+    ref: values
   syncPolicy:
     automated:
       prune: true
