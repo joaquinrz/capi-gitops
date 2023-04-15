@@ -20,7 +20,7 @@ prometheus:
       region: westeurope
       cluster: management
     remoteWrite:
-    - url: "http://thanos-receive.thanos/api/v1/receive"
+    - url: "http://thanos-receive.thanos:10907/api/v1/receive"
       name: Thanos
 grafana:
   enabled: false
