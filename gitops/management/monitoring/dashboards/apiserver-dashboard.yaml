@@ -1752,21 +1752,7 @@ data:
     }
 kind: ConfigMap
 metadata:
-  annotations:
-    meta.helm.sh/release-name: prometheus
-    meta.helm.sh/release-namespace: default
-  creationTimestamp: "2023-04-15T20:08:13Z"
   labels:
-    app: kube-prometheus-stack-grafana
-    app.kubernetes.io/instance: prometheus
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    app.kubernetes.io/version: 45.10.1
-    chart: kube-prometheus-stack-45.10.1
     grafana_dashboard: "1"
-    heritage: Helm
-    release: prometheus
-  name: prometheus-kube-prometheus-apiserver
+  name: apiserver-dashboard
   namespace: default
-  resourceVersion: "2704"
-  uid: b6dd7384-52f5-4eed-b636-60aa271d7c54
