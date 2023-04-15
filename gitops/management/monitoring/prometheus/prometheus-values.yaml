@@ -1,0 +1,26 @@
+global:
+  rbac:
+    create: true
+    pspEnabled: false
+alertmanager:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kube-state-metrics:
+  metricLabelsAllowlist:
+  - nodes=[agentpool,node_kubernetes_io_instance-type]
+prometheus:
+  enabled: true
+  prometheusSpec:
+    externalLabels:
+      region: westeurope
+      cluster: management
+    remoteWrite:
+    - url: "http://thanos-receive.thanos/api/v1/receive"
+      name: Thanos
+grafana:
+  enabled: false
