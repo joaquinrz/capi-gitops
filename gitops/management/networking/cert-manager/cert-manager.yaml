@@ -48,8 +48,8 @@ spec:
   project: infra
   sources:
   - repoURL: 'https://charts.adfinis.com'
-    targetRevision: "v0.0.7"
-    chart: cluster-issuer
+    targetRevision: "0.2.5"
+    chart: cert-manager-issuers
     helm:
       valueFiles:
       - $values/gitops/management/networking/cert-manager/cluster-issuer-values.yaml
