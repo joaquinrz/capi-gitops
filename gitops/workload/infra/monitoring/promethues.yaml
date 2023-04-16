@@ -1,43 +1,42 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-    name: prometheus
----
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: prometheus
+  name: prometheus-workload
   namespace: prometheus
 spec:
-  destination:
-    namespace: prometheus
-    server: https://kubernetes.default.svc
-  project: infra
-  sources:
-  - repoURL: 'https://prometheus-community.github.io/helm-charts/'
-    targetRevision: "45.10.1"
-    chart: kube-prometheus-stack
-    helm:
-      values: |
-        prometheusSpec:
-          externalLabels:
-            region: westeurope
-            cluster: management
-      valueFiles:
-      - $values/gitops/workload/monitoring/prometheus-workload-values.yaml
-  - repoURL: https://github.com/joaquinrz/capi-gitops.git
-    targetRevision: alessandro
-    ref: values
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - ServerSideApply=true
-    - CreateNamespace=true
-    retry:
-      limit: -1 # number of failed sync attempt retries; unlimited number of attempts if less than 0
-      backoff:
-        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
-        factor: 2 # a factor to multiply the base duration after each failed retry
-        maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          policy.kyverno.io/policy-name: sync-secret  
+  template:
+    metadata:
+      name: '{{name}}-prometheus'
+    spec:
+      project: workload
+      sources:
+      - repoURL: 'https://prometheus-community.github.io/helm-charts/'
+        targetRevision: "45.10.1"
+        chart: kube-prometheus-stack
+        helm:
+          values: |
+            prometheusSpec:
+              externalLabels:
+                region: westeurope
+                cluster: management
+              remoteWrite:
+              - url: "http://thanos-receive.thanos:19291/api/v1/receive"
+                name: Thanos
+          valueFiles:
+          - $values/gitops/workload/monitoring/prometheus-workload-values.yaml
+      - repoURL: https://github.com/joaquinrz/capi-gitops.git
+        targetRevision: alessandro
+        ref: values
+      destination:
+        server: '{{server}}'
+        namespace: prometheus
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
