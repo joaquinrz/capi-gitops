@@ -71,28 +71,29 @@ ArgoCD is an open-source continuous delivery tool designed to simplify the deplo
 
 You can install ArgoCD on your Kubernetes cluster by running the following commands in your terminal or command prompt. These commands will download and install ArgoCD on your cluster, allowing you to use it for GitOps-based continuous delivery of your applications
 
+Add ArgoCD Helm Repo
+
 ```bash
-kubectl create namespace argocd
-
-# Add ArgoCD Helm Repo
 helm repo add argo https://argoproj.github.io/argo-helm
-
-# Update Helm Repo
 helm repo update
+```
 
-# Install ArgoCD
+Edit the `gitops/management/argocd/argocd-values.yaml` with your hostname and domain name for ArgoCD ingress, then install ArgoCD:
+
+```bash
 helm upgrade -i -n argocd \
   --version 5.29.1 \
   --create-namespace \
   --values gitops/management/argocd/argocd-values.yaml \
   --values argocd-initial-objects.yaml \
   argocd argo/argo-cd
+```
 
-# Verify that ArgoCD is running:
+Verify that ArgoCD is running:
 kubectl get pods -n argocd
 
 # Access the ArgoCD web UI by running the following command, and then open the URL in a web browser:
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+
 
 # Log in to the ArgoCD http://localhost:8080 with the following credentials:
 # - Username: admin
