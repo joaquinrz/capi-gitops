@@ -29,7 +29,7 @@ spec:
         targetRevision: alessandro
         ref: values
       destination:
-        server: '{{server}}'
+        server: '{{url}}'
         namespace: '{{workload-cluster}}'
       syncPolicy:
         automated:
