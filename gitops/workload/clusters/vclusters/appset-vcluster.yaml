@@ -19,7 +19,7 @@ spec:
     spec:
       project: clusters
       sources:
-      - repoURL: 'https://charts.loft.sh/helm'
+      - repoURL: 'https://charts.loft.sh/'
         targetRevision: 0.15.0
         chart: vcluster-k8s
         helm:
