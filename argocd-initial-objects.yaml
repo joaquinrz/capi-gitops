@@ -15,9 +15,11 @@ applications:
     namespace: argocd
   syncPolicy:
     automated:
+      selfHeal: true
       prune: false
-      selfHeal: false
-
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true
 
 projects:
 - name: infra

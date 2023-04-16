@@ -89,7 +89,7 @@ helm upgrade -i -n argocd \
   --version 0.0.9\
   --create-namespace \
   --values argocd-initial-objects.yaml \
-  argocd argo/argocd-apps
+  argocd-apps argo/argocd-apps
 ```
 
 Verify that ArgoCD is running:
