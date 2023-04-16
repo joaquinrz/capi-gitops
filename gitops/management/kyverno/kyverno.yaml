@@ -42,6 +42,8 @@ kind: Application
 metadata:
   name: kyverno-policies
   namespace: kyverno
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   destination:
     namespace: kyverno
