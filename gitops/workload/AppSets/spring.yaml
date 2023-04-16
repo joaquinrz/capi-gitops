@@ -8,7 +8,8 @@ spec:
   - clusters:
       selector:
         matchLabels:
-          policy.kyverno.io/policy-name: sync-secret  template:
+          policy.kyverno.io/policy-name: sync-secret  
+  template:
     metadata:
       name: '{{name}}-sample-spring-boot'
     spec:
