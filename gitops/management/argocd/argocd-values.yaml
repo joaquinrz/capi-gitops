@@ -20,7 +20,7 @@ server:
       external-dns.alpha.kubernetes.io/hostname: argocd.kubespaces.io
     hosts: 
     - argocd.kubespaces.io
-    tls: []
+    tls:
       - secretName: argocd-tls
         hosts:
           - argocd.kubespaces.io
