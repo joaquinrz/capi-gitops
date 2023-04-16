@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: prometheus-workload
-  namespace: prometheus
+  namespace: argocd
 spec:
   generators:
   - clusters:
