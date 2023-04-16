@@ -7,12 +7,12 @@ spec:
   generators:
   - list:
       elements:
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: vc1
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: vc2
+      # - cluster: management
+      #   url: https://kubernetes.default.svc
+      #   workload-cluster: vc1
+      # - cluster: management
+      #   url: https://kubernetes.default.svc
+      #   workload-cluster: vc2
   template:
     metadata:
       name: '{{workload-cluster}}'
