@@ -2,6 +2,8 @@ global:
   rbac:
     create: true
     pspEnabled: false
+nodeExporter:
+  enabled: false
 alertmanager:
   enabled: false
 kubeControllerManager:
