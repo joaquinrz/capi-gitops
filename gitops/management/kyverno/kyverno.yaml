@@ -19,7 +19,7 @@ spec:
     chart: kyverno
     helm:
       valueFiles:
-      - $values/gitops/management//kyverno/kyverno-values.yaml
+      - $values/gitops/management/kyverno/kyverno-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
     targetRevision: alessandro
     ref: values
@@ -35,3 +35,32 @@ spec:
         duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
         factor: 2 # a factor to multiply the base duration after each failed retry
         maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kyverno-policies
+  namespace: kyverno
+spec:
+  destination:
+    namespace: kyverno
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    path: "gitops/management/kyverno/policies"
+    targetRevision: alessandro
+    directory:
+      recurse: true
+    repoURL: https://github.com/joaquinrz/capi-gitops.git
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 10m
