@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: vclusters-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: management
+        url: https://kubernetes.default.svc
+        workload-cluster: vc1
+      - cluster: management
+        url: https://kubernetes.default.svc
+        workload-cluster: vc2
+  template:
+    metadata:
+      name: '{{workload-cluster}}'
+    spec:
+      project: clusters
+      sources:
+      - repoURL: 'https://charts.loft.sh/'
+        targetRevision: 0.15.0
+        chart: vcluster-k8s
+        helm:
+          valueFiles:
+          - '$values/gitops/workload/clusters/vclusters/{{workload-cluster}}/values.yaml'
+      - repoURL: https://github.com/joaquinrz/capi-gitops.git
+        targetRevision: alessandro
+        ref: values
+      destination:
+        server: '{{url}}'
+        namespace: '{{workload-cluster}}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

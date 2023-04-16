@@ -1,3 +1,4 @@
+#Root app for apps targeting workload clusters
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -9,7 +10,7 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: gitops/workload
+    path: gitops/workload/apps
     targetRevision: alessandro
     directory:
       recurse: true
