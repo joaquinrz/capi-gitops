@@ -19,4 +19,4 @@ spec:
   # Only permit applications to deploy to the guestbook namespace in the same cluster
   destinations:
     - namespace: "*"
-      server: "w*"
+      server: "*"
