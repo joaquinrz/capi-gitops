@@ -7,7 +7,7 @@ spec:
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
-  project: workload
+  project: infra
   source:
     path: gitops/workload
     targetRevision: alessandro
