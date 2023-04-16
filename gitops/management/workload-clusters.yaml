@@ -1,7 +1,8 @@
+#Root app for creating workload virtual clusters; clusters definition is in gitops/workload/clusters/vclusters
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root-app-clusters
+  name: root-app-vclusters
   namespace: argocd
 spec:
   destination:

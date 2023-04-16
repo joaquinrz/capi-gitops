@@ -1,3 +1,4 @@
+#Root app for apps targeting workload clusters
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
