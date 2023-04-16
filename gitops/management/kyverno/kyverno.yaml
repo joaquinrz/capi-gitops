@@ -14,7 +14,7 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   sources:
-  - repoURL: 'https://charts.jetstack.io'
+  - repoURL: 'https://kyverno.github.io/kyverno/'
     targetRevision: "2.7.2"
     chart: kyverno
     helm:
