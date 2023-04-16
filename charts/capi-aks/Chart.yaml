@@ -1,4 +1,4 @@
 apiVersion: v2
-name: aks-cluster
+name: capi-aks
 description: A Helm chart for deploying AKS worker cluster using CAPZ
-version: 0.0.2
+version: 0.0.1

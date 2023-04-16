@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-    - 'charts/aks-cluster/**'
+    - 'charts/capi-aks/**'
 jobs:
   release:
     permissions:
