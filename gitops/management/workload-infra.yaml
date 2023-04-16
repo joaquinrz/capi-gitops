@@ -1,40 +1,27 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-    name: prometheus
----
+#Root app for apps targeting workload clusters
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
-  namespace: prometheus
+  name: root-app-workload-infra
+  namespace: argocd
 spec:
   destination:
-    namespace: prometheus
+    namespace: argocd
     server: https://kubernetes.default.svc
   project: infra
-  sources:
-  - repoURL: 'https://prometheus-community.github.io/helm-charts/'
-    targetRevision: "45.10.1"
-    chart: kube-prometheus-stack
-    helm:
-      values: |
-        prometheusSpec:
-          externalLabels:
-            region: westeurope
-            cluster: management
-      valueFiles:
-      - $values/gitops/workload/monitoring/prometheus-workload-values.yaml
-  - repoURL: https://github.com/joaquinrz/capi-gitops.git
+  source:
+    path: gitops/workload/infra
     targetRevision: alessandro
-    ref: values
+    directory:
+      recurse: true
+      exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml}'
+    repoURL: https://github.com/joaquinrz/capi-gitops
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-    - ServerSideApply=true
-    - CreateNamespace=true
+      - CreateNamespace=true
     retry:
       limit: -1 # number of failed sync attempt retries; unlimited number of attempts if less than 0
       backoff:
