@@ -1,10 +1,10 @@
-# Ephemeral Clusters as a Service with ClusterAPI and GitOps
+# Ephemeral Clusters as a Service with vcluster, ClusterAPI and ArgoCD
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 ## Overview
 
-Welcome to Ephemeral Clusters as a Service with ClusterAPI and GitOps. GitOps has rapidly gained popularity in recent years, with its many benefits over traditional CI/CD tools. However, with increased adoption comes the challenge of managing multiple Kubernetes clusters across different cloud providers. At scale, ensuring observability and security across all clusters can be particularly difficult.
+Welcome to Ephemeral Clusters as a Service with [VCluster](https://www.vcluster.com) and [ArgoCD](https://argo-cd.readthedocs.io/en/stable/). GitOps has rapidly gained popularity in recent years, with its many benefits over traditional CI/CD tools. However, with increased adoption comes the challenge of managing multiple Kubernetes clusters across different cloud providers. At scale, ensuring observability and security across all clusters can be particularly difficult.
 
 This repository demonstrates how open-source tools, such as ClusterAPI, ArgoCD, and Prometheus+Thanos, can be used to effectively manage and monitor large-scale Kubernetes deployments. We will walk you through a sample that automates the deployment of several clusters and applications securely and with observability in mind.
 
@@ -14,10 +14,9 @@ For our sample will be using Azure Kubernetes Service (AKS). Before starting, yo
 
 - An Azure account
 - Azure CLI [download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
-- ArgoCD CLI [download](https://argo-cd.readthedocs.io/en/stable/cli_installation/)
-- kubectl [download](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
-- helm [download](https://helm.sh/docs/intro/install/)
-- clusterctl [download](https://cluster-api.sigs.k8s.io/user/quick-start.html)
+- Optional but recommented (and the instructions below assume you have one) A working DNS zone in Azure, to use proper DNS names and automatic certifcates provisioning with Let'sEncrypt
+
+Everything else is installed via ArgoCD, so no need for any extra CLI!
 
 ## Step 1: Create an ArgoCD management cluster with AKS
 
@@ -25,7 +24,10 @@ To create a new management cluster in AKS, run the following commands. Otherwise
 
 ```bash
 
-export AZURE_SUBSCRIPTION_ID=<yourSubscriptionId>
+AZURE_SUBSCRIPTION_ID=<yourSubscriptionId>
+CLUSTER_RG=clusters
+CLUSTER_NAME=management
+LOCATION=westeurope
 
 # Connecting to Azure
 az login --use-device-code
@@ -34,13 +36,29 @@ az login --use-device-code
 az account set --subscription $AZURE_SUBSCRIPTION_ID
 
 # Create a resource group for your AKS cluster with the following command, replacing <resource-group> with a name for your resource group and <location> with the Azure region where you want your resources to be located:
-az group create --name <resource-group> --location <location>
+az group create --name $CLUSTER_RG --location $LOCATION
+
+# To use automatic DNS name updates via external-dns, we need to create a new managed identity and assign the role of DNS Contributor to the resource group containg the zone resource  
+
+CLUSTER_RG=clusters
+IDENTITY_NAME=gitops
+AZURE_DNS_ZONE=kubespaces.io
+AZURE_DNS_ZONE_RESOURCE_GROUP=dns
+
+IDENTITY=$(az identity create -n $IDENTITY_NAME -g $CLUSTER_RG --query id -o tsv)
+IDENTITY_CLIENTID=$(az identity show -g $CLUSTER_RG -n $IDENTITY_NAME -o tsv --query clientId)
+
+DNS_ID=$(az network dns zone show --name $AZURE_DNS_ZONE \
+  --resource-group $AZURE_DNS_ZONE_RESOURCE_GROUP --query "id" --output tsv)
+
+az role assignment create --role "DNS Zone Contributor" --assignee $PRINCIPAL_ID --scope $DNS_ID
 
 # Create an AKS cluster with the following command, replacing <cluster-name> with a name for your cluster, and <node-count> with the number of nodes you want in your cluster:
-az aks create --resource-group <resource-group> --name <cluster-name> --location <location> --generate-ssh-keys
+az aks create -k 1.26.0 -y -g clusters -s Standard_B4ms -c 2  \
+--assign-identity $IDENTITY --assign-kubelet-identity $IDENTITY --network-plugin kubenet -n $
 
 # Connect to the AKS cluster:
-az aks get-credentials --resource-group <resource-group> --name <cluster-name>
+az aks get-credentials --resource-group $CLUSTER_RG --name $CLUSTER_NAME
 
 #Verify that you can connect to the AKS cluster:
 kubectl get nodes

@@ -12,3 +12,16 @@ configs:
       url: https://github.com/joaquinrz/capi-gitops.git
       name: gitops
       type: git
+server:
+  ingress:
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      external-dns.alpha.kubernetes.io/hostname: argocd.kubespaces.io
+    hosts: 
+    - argocd.kubespaces.io
+    tls: []
+      - secretName: argocd-tls
+        hosts:
+          - argocd.kubespaces.io
+    https: true
