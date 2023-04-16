@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: sample-spring-boot
+  namespace: argocd
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          policy.kyverno.io/policy-name: sync-secret  template:
+    metadata:
+      name: '{{name}}-sample-spring-boot'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/piomin/openshift-cluster-config.git
+        targetRevision: HEAD
+        path: apps/simple
+      destination:
+        server: '{{server}}'
+        namespace: demo
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
