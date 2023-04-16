@@ -28,6 +28,9 @@ AZURE_SUBSCRIPTION_ID=<yourSubscriptionId>
 CLUSTER_RG=clusters
 CLUSTER_NAME=management
 LOCATION=westeurope
+IDENTITY_NAME=gitops
+AZURE_DNS_ZONE=kubespaces.io
+AZURE_DNS_ZONE_RESOURCE_GROUP=dns
 
 # Connecting to Azure
 az login --use-device-code
@@ -40,11 +43,6 @@ az group create --name $CLUSTER_RG --location $LOCATION
 
 # To use automatic DNS name updates via external-dns, we need to create a new managed identity and assign the role of DNS Contributor to the resource group containg the zone resource  
 
-CLUSTER_RG=clusters
-IDENTITY_NAME=gitops
-AZURE_DNS_ZONE=kubespaces.io
-AZURE_DNS_ZONE_RESOURCE_GROUP=dns
-
 IDENTITY=$(az identity create -n $IDENTITY_NAME -g $CLUSTER_RG --query id -o tsv)
 IDENTITY_CLIENTID=$(az identity show -g $CLUSTER_RG -n $IDENTITY_NAME -o tsv --query clientId)
 
@@ -54,8 +52,8 @@ DNS_ID=$(az network dns zone show --name $AZURE_DNS_ZONE \
 az role assignment create --role "DNS Zone Contributor" --assignee $PRINCIPAL_ID --scope $DNS_ID
 
 # Create an AKS cluster with the following command, replacing <cluster-name> with a name for your cluster, and <node-count> with the number of nodes you want in your cluster:
-az aks create -k 1.26.0 -y -g clusters -s Standard_B4ms -c 2  \
---assign-identity $IDENTITY --assign-kubelet-identity $IDENTITY --network-plugin kubenet -n $
+az aks create -k 1.26.0 -y -g $CLUSTER_RG -s Standard_B4ms -c 2  \
+--assign-identity $IDENTITY --assign-kubelet-identity $IDENTITY --network-plugin kubenet -n $CLUSTER_NAME
 
 # Connect to the AKS cluster:
 az aks get-credentials --resource-group $CLUSTER_RG --name $CLUSTER_NAME
@@ -85,8 +83,13 @@ helm upgrade -i -n argocd \
   --version 5.29.1 \
   --create-namespace \
   --values gitops/management/argocd/argocd-values.yaml \
-  --values argocd-initial-objects.yaml \
   argocd argo/argo-cd
+
+helm upgrade -i -n argocd \
+  --version 0.0.9\
+  --create-namespace \
+  --values argocd-initial-objects.yaml \
+  argocd argo/argocd-apps
 ```
 
 Verify that ArgoCD is running:
