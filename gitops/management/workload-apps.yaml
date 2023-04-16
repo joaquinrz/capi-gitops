@@ -10,7 +10,7 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: gitops/workload/apps
+    path: gitops/workload/appset
     targetRevision: alessandro
     directory:
       recurse: true
