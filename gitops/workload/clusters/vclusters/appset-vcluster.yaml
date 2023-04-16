@@ -18,7 +18,7 @@ spec:
       name: '{{cluster}}-{{workload-cluster}}-cluster'
     spec:
       project: clusters
-      source:
+      sources:
       - repoURL: 'https://charts.loft.sh/helm'
         targetRevision: 0.15.0
         chart: vcluster-k8s
