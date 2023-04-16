@@ -20,13 +20,15 @@ spec:
         chart: kube-prometheus-stack
         helm:
           values: |
-            prometheusSpec:
-              externalLabels:
-                region: westeurope
-                cluster: management
-              remoteWrite:
-              - url: "http://thanos-receive.thanos:19291/api/v1/receive"
-                name: Thanos
+            prometheus:
+              enabled: true
+              prometheusSpec:
+                externalLabels:
+                  region: westeurope
+                  cluster: {{name}}
+                remoteWrite:
+                - url: "http://thanos-receive.thanos:19291/api/v1/receive"
+                  name: Thanos
           valueFiles:
           - $values/gitops/workload/infra/monitoring/prometheus-workload-values.yaml
       - repoURL: https://github.com/joaquinrz/capi-gitops.git

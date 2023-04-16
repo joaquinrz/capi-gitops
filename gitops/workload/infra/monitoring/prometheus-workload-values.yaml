@@ -11,15 +11,11 @@ kubeScheduler:
 kubeEtcd:
   enabled: false
 kubelet:
-  enabled: true
-  serviceMonitor:
-    cAdvisor: true
-nodeExporter:
   enabled: false
+  serviceMonitor:
+    cAdvisor: false
 kube-state-metrics:
   metricLabelsAllowlist:
   - nodes=[agentpool,node_kubernetes_io_instance-type]
-prometheus:
-  enabled: true
 grafana:
   enabled: false
