@@ -36,7 +36,7 @@ extraObjects:
           targetRevision: alessandro
           directory:
             recurse: true
-            exclude: '{*values.yaml,*dashboard.yaml}'
+            exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml}'
           repoURL: https://github.com/joaquinrz/capi-gitops
         syncPolicy:
           automated:
