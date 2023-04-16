@@ -1,6 +1,0 @@
-syncer:
-  extraArgs:
-  - --tls-san=w1.vcluster.kubespaces.io
-sync:
-  ingresses:
-    enabled: tru

@@ -18,16 +18,15 @@ spec:
       name: '{{workload-cluster}}'
     spec:
       project: clusters
-      sources:
-      - repoURL: 'https://charts.loft.sh/'
+      source:
+        repoURL: 'https://charts.loft.sh/'
         targetRevision: 0.15.0
         chart: vcluster-k8s
         helm:
-          valueFiles:
-          - '$values/gitops/workload/clusters/vclusters/{{workload-cluster}}/values.yaml'
-      - repoURL: https://github.com/joaquinrz/capi-gitops.git
-        targetRevision: alessandro
-        ref: values
+          values: |
+            sync:
+              ingresses:
+                enabled: true
       destination:
         server: '{{url}}'
         namespace: '{{workload-cluster}}'
