@@ -13,7 +13,7 @@ spec:
     metadata:
       name: '{{name}}-sample-spring-boot'
     spec:
-      project: default
+      project: workload
       source:
         repoURL: https://github.com/piomin/openshift-cluster-config.git
         targetRevision: HEAD
