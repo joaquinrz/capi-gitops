@@ -19,7 +19,7 @@ applications:
       prune: false
     syncOptions:
       - CreateNamespace=true
-      - Replace=true
+      - ServerSideApply=true
 
 projects:
 - name: infra
