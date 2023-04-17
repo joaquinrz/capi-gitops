@@ -16,7 +16,7 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    repoURL: 'https://capi-operator.github.io/capi-operator/'
+    repoURL: 'https://kubernetes-sigs.github.io/cluster-api-operator'
     targetRevision: "0.2.0"
     chart: capi-operator
   syncPolicy:
