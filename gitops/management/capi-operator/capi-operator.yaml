@@ -11,6 +11,9 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
+  ignoreDifferences:
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
   destination:
     namespace: capi-operator-system
     server: https://kubernetes.default.svc
