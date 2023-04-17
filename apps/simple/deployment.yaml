@@ -18,7 +18,7 @@ spec:
       containers:
         - name: prometheus-sample-app
           image: ams0/prometheus_sample_app:latest
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           command:
             - "/bin/main"
           args:
