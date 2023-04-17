@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: sample-spring-boot
+  name: prometheus-sample-app
   namespace: argocd
 spec:
   generators:
@@ -11,12 +11,12 @@ spec:
           policy.kyverno.io/policy-name: sync-secret  
   template:
     metadata:
-      name: '{{name}}-sample-spring-boot'
+      name: '{{name}}-prometheus-sample-app'
     spec:
       project: workload
       source:
-        repoURL: https://github.com/piomin/openshift-cluster-config.git
-        targetRevision: HEAD
+        repoURL: https://github.com/joaquinrz/capi-gitops.git
+        targetRevision: alessandro
         path: apps/simple
       destination:
         server: '{{server}}'
