@@ -32,20 +32,4 @@ spec:
         duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
         factor: 2 # a factor to multiply the base duration after each failed retry
         maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
----
-apiVersion: operator.cluster.x-k8s.io/v1alpha1
-kind: CoreProvider
-metadata:
-  name: cluster-api
-  namespace: capi-system
-spec:
-  version: v1.4.1
----
-apiVersion: operator.cluster.x-k8s.io/v1alpha1
-kind: InfrastructureProvider
-metadata:
- name: azure
- namespace: capz-system
-spec:
- version: v1.8.2
- secretName: cluster-identity-secret
+-
