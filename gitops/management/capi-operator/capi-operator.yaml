@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: capi-operator-system
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: capi-operator
+  namespace: capi-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  destination:
+    namespace: capi-operator
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    repoURL: 'https://capi-operator.github.io/capi-operator/'
+    targetRevision: "0.2.0"
+    chart: capi-operator
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: -1 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+      backoff:
+        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
+---
+apiVersion: operator.cluster.x-k8s.io/v1alpha1
+kind: CoreProvider
+metadata:
+  name: cluster-api
+  namespace: capi-system
+spec:
+  version: v1.4.1
+---
+apiVersion: operator.cluster.x-k8s.io/v1alpha1
+kind: InfrastructureProvider
+metadata:
+ name: azure
+ namespace: capz-system
+spec:
+ version: v1.8.2
+ secretName: cluster-identity-secret
