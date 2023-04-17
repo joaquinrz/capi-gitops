@@ -7,7 +7,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: capi-operator
-  namespace: capi-operator
+  namespace: capi-operator-system
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
