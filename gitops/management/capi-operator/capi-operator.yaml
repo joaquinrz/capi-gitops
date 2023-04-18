@@ -69,6 +69,8 @@ kind: CoreProvider
 metadata:
   name: cluster-api
   namespace: capi-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   version: v1.4.1
   deployment:
@@ -85,16 +87,18 @@ spec:
 apiVersion: operator.cluster.x-k8s.io/v1alpha1
 kind: InfrastructureProvider
 metadata:
- name: azure
- namespace: capz-system
+  name: azure
+  namespace: capz-system
+  annotations:
+  argocd.argoproj.io/sync-wave: "5"
 spec:
- version: v1.8.2
- deployment:
-  containers:
-  - name: manager
- manager:
-   featureGates:
-     "MachinePool": true
-     "AKSResourceHealth": false
-     "EdgeZone": false
- secretName: cluster-identity-secret
+  version: v1.8.2
+  deployment:
+    containers:
+    - name: manager
+  manager:
+    featureGates:
+      "MachinePool": true
+      "AKSResourceHealth": false
+      "EdgeZone": false
+  secretName: cluster-identity-secret
