@@ -81,5 +81,5 @@ spec:
  version: v1.8.2
  manager:
    featureGates:
-     'MachinePool': true
+     "MachinePool": true
  secretName: cluster-identity-secret
