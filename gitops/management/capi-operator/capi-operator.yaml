@@ -71,20 +71,20 @@ metadata:
   namespace: capi-system
 spec:
   version: v1.4.1
----
-apiVersion: operator.cluster.x-k8s.io/v1alpha1
-kind: InfrastructureProvider
-metadata:
- name: azure
- namespace: capz-system
-spec:
- version: v1.8.2
- deployment:
-  containers:
-  - name: managerX
- manager:
-   featureGates:
-     "MachinePool": true
-     "AKSResourceHealth": false
-     "EdgeZone": false
- secretName: cluster-identity-secret
+# ---
+# apiVersion: operator.cluster.x-k8s.io/v1alpha1
+# kind: InfrastructureProvider
+# metadata:
+#  name: azure
+#  namespace: capz-system
+# spec:
+#  version: v1.8.2
+#  deployment:
+#   containers:
+#   - name: managerX
+#  manager:
+#    featureGates:
+#      "MachinePool": true
+#      "AKSResourceHealth": false
+#      "EdgeZone": false
+#  secretName: cluster-identity-secret
