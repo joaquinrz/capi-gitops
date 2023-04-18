@@ -10,7 +10,7 @@ applications:
     path: gitops/management
     directory:
       recurse: true
-      exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml}'
+      exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml,*resource.yaml}'
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
