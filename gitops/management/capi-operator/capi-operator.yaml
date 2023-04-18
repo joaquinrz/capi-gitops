@@ -81,7 +81,7 @@ spec:
  version: v1.8.2
  manager:
    featureGates:
-     MachinePool: true
-     TEST: true
-     ANOTHER: false
+     'MachinePool': true
+     'TEST': true
+     'ANOTHER': false
  secretName: cluster-identity-secret
