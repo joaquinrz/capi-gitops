@@ -79,4 +79,7 @@ metadata:
  namespace: capz-system
 spec:
  version: v1.8.2
+ manager:
+   featureGates:
+     MachinePool: true
  secretName: cluster-identity-secret
