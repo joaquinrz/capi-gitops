@@ -25,7 +25,7 @@ metadata:
   name: azure
   namespace: capz-system
   annotations:
-  argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   version: v1.8.2
   deployment:
