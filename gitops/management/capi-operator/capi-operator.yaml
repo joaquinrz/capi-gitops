@@ -81,7 +81,7 @@ spec:
  version: v1.8.2
  deployment:
   containers:
-  - name: manager
+  - name: managerX
  manager:
    featureGates:
      "MachinePool": true
