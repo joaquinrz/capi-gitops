@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.name }}
   labels:
     app: {{ .Values.name }}
-    release: {{ .Values.prometheusReleaseName }}-prometheus
+    release: {{ .Values.prometheusReleaseName }}
 spec:
   selector:
     matchLabels:
