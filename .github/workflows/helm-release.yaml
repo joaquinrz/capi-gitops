@@ -1,10 +1,11 @@
-name: CAPZ Helm Release
+name: Helm ReleaseS
 on:
   push:
     branches:
       - main
     paths:
     - 'charts/capi-aks/**'
+    - 'charts/imdb/**'
 jobs:
   release:
     permissions:
