@@ -99,9 +99,12 @@ helm upgrade -i -n argocd \
 ```
 
 Verify that ArgoCD is running:
-kubectl get pods -n argocd
 
-# Access the ArgoCD web UI by running the following command, and then open the URL in a web browser:
+```bash
+kubectl get pods -n argocd
+```
+
+Access the ArgoCD web UI by running the following command, and then open the URL in a web browser:
 
 ```bash
 open https://argocd.$AZURE_DNS_ZONE
@@ -112,36 +115,24 @@ ArgoCD is in read-only mode for anonymous users, that should be enough to monito
 ```bash
 kubectl get secret -n argocd argocd-initial-admin-secret  -o=jsonpath='{.data.password}'| base64 -D
 ```
-```
 
 ## Step 2:  Bootstrap Management Cluster with ClusterAPI
 
-To initialize the AKS cluster with Cluster API and turn it into the management cluster, follow these instructions. Once initialized, the management cluster will allow you to control and maintain a fleet of ephemeral clusters.
+To initialize the AKS cluster with Cluster API and turn it into the management cluster, follow these instructions. Once initialized, the management cluster will allow you to control and maintain a fleet of ephemeral clusters. Unfortunately this part cannot be automated via ArgoCD just yet, although a promising effort is made in the `capi-operator` [repository](https://github.com/kubernetes-sigs/cluster-api-operator/tree/main):
 
 ```bash
 # Enable support for managed topologies and experimental features
 export CLUSTER_TOPOLOGY=true
-export EXP_AKS=true
 export EXP_MACHINE_POOL=true
 
 # Create an Azure Service Principal in the Azure portal. (Note: Make sure this Service Principal has access to the resource group)
 # Create an Azure Service Principal
 export AZURE_SP_NAME="kubecon23capi"
 
-az ad sp create-for-rbac \
-  --name $AZURE_SP_NAME \
-  --role contributor \
-  --scopes="/subscriptions/${AZURE_SUBSCRIPTION_ID}"
-
-# TODO - Add command so that SP has role assigment to the resource group of the cluster
-
 export AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-export AZURE_TENANT_ID=$(z account show --query tenantId -o tsv)
-export AZURE_CLIENT_SECRET=$(az ad sp create-for-rbac \
-  --name $AZURE_SP_NAME \
-  --role contributor \
-  --scopes="/subscriptions/${AZURE_SUBSCRIPTION_ID}" --query password -o tsv)
-export AZURE_CLIENT_ID=$(az ad sp list --display-name $AZURE_SP_NAME --query "[0].appId" -o tsv)"
+export AZURE_TENANT_ID=$(az account show --query tenantId -o tsv)
+export AZURE_CLIENT_SECRET=$(az ad sp create-for-rbac --name $AZURE_SP_NAME --role contributor --scopes="/subscriptions/${AZURE_SUBSCRIPTION_ID}" --query password -o tsv)
+export AZURE_CLIENT_ID=$(az ad sp list --display-name $AZURE_SP_NAME --query "[0].appId" -o tsv)
 
 # Base64 encode the variables
 export AZURE_SUBSCRIPTION_ID_B64="$(echo -n "$AZURE_SUBSCRIPTION_ID" | base64 | tr -d '\n')"
@@ -156,7 +147,7 @@ export AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE="default"
 
 # Create a secret to include the password of the Service Principal identity created in Azure
 # This secret will be referenced by the AzureClusterIdentity used by the AzureCluster
-kubectl create secret generic "${AZURE_CLUSTER_IDENTITY_SECRET_NAME}" --from-literal=clientSecret="${AZURE_CLIENT_SECRET}"
+kubectl create secret generic "${AZURE_CLUSTER_IDENTITY_SECRET_NAME}" --from-literal=clientSecret="${AZURE_CLIENT_SECRET}" -n ${AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE}
 
 # Initialize the management cluster for azure
 clusterctl init --infrastructure azure
