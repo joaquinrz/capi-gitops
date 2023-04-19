@@ -107,49 +107,18 @@ kubectl get pods -n argocd
 open https://argocd.$AZURE_DNS_ZONE
 ```
 
-# Log in to the ArgoCD http://localhost:8080 with the following credentials:
-# - Username: admin
-# - Password: Retrieve the ArgoCD password by running one of the following command:
-
-argocd admin initial-password -n argocd
-
-# Alternatively, you can also retrieve the credentials using kubectl.
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-```
-
-## Step 2:  Install Prometheus and Grafana
-
-Prometheus and Grafana are two popular open-source tools used for monitoring and visualizing data. Prometheus collects metrics from various sources, while Grafana provides customizable dashboards for displaying this data. Together, they offer a powerful and flexible monitoring solution that can help developers and system administrators gain insights into the performance of their applications and systems.
-
-The following commands will help you install Prometheus and Grafana in your cluster
+ArgoCD is in read-only mode for anonymous users, that should be enough to monitor the installaation progress, but if you want to change things, retrieve the secret with:
 
 ```bash
-# Add prometheus-community helm chart. This Helm chart by default also includes Grafana
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update 
-
-# Create a monitoring namespace for these applications
-kubectl create ns monitoring
-
-# Install the Helm Chart
-helm install -n monitoring kube-stack-prometheus prometheus-community/kube-prometheus-stack
-
-# Access Grafana UI http://localhost:8081/
-# Credentials: admin:prom-operator
-kubectl port-forward service/kube-stack-prometheus-grafana  -n monitoring 8081:80
-
-# Access Prometheus UI http://localhost:9090/ 
-kubectl port-forward service/kube-stack-prometheus-kube-prometheus -n monitoring 9090:9090
+kubectl get secret -n argocd argocd-initial-admin-secret  -o=jsonpath='{.data.password}'| base64 -D
+```
 ```
 
-## Step 3:  Installing Thanos
-
-## Step 4:  Bootstrap Management Cluster with ClusterAPI
+## Step 2:  Bootstrap Management Cluster with ClusterAPI
 
 To initialize the AKS cluster with Cluster API and turn it into the management cluster, follow these instructions. Once initialized, the management cluster will allow you to control and maintain a fleet of ephemeral clusters.
 
 ```bash
-
 # Enable support for managed topologies and experimental features
 export CLUSTER_TOPOLOGY=true
 export EXP_AKS=true
@@ -159,16 +128,20 @@ export EXP_MACHINE_POOL=true
 # Create an Azure Service Principal
 export AZURE_SP_NAME="kubecon23capi"
 
- az ad sp create-for-rbac \
-   --name $AZURE_SP_NAME \
-   --role contributor \
-   --scopes="/subscriptions/${AZURE_SUBSCRIPTION_ID}"
+az ad sp create-for-rbac \
+  --name $AZURE_SP_NAME \
+  --role contributor \
+  --scopes="/subscriptions/${AZURE_SUBSCRIPTION_ID}"
 
 # TODO - Add command so that SP has role assigment to the resource group of the cluster
 
-export AZURE_TENANT_ID="<Tenant>"
-export AZURE_CLIENT_ID="<AppId>"
-export AZURE_CLIENT_SECRET="<Password>"
+export AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+export AZURE_TENANT_ID=$(z account show --query tenantId -o tsv)
+export AZURE_CLIENT_SECRET=$(az ad sp create-for-rbac \
+  --name $AZURE_SP_NAME \
+  --role contributor \
+  --scopes="/subscriptions/${AZURE_SUBSCRIPTION_ID}" --query password -o tsv)
+export AZURE_CLIENT_ID=$(az ad sp list --display-name $AZURE_SP_NAME --query "[0].appId" -o tsv)"
 
 # Base64 encode the variables
 export AZURE_SUBSCRIPTION_ID_B64="$(echo -n "$AZURE_SUBSCRIPTION_ID" | base64 | tr -d '\n')"
