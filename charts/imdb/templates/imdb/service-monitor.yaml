@@ -11,3 +11,4 @@ spec:
       app: {{ .Values.name }}
   endpoints:
   - port: http
+ 

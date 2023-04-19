@@ -1,4 +1,4 @@
 apiVersion: v2
 name: imdb
 description: A Helm chart for deploying IMDB app
-version: 0.0.1
+version: 0.0.2
