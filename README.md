@@ -29,6 +29,7 @@ export CLUSTER_NAME=management
 export LOCATION=westeurope
 export IDENTITY_NAME=gitops$RANDOM
 export NODE_COUNT=2
+export AZ_AKS_VERSION=1.25.6
 export AZURE_DNS_ZONE=k8sis.fun
 export AZURE_DNS_ZONE_RESOURCE_GROUP=dns
 ```
@@ -42,7 +43,7 @@ az group create --name $CLUSTER_RG --location $LOCATION
 To use automatic DNS name updates via external-dns, we need to create a new managed identity and assign the role of DNS Contributor to the resource group containg the zone resource  
 
 ```bash
-IDENTITY=$(az identity create -n $IDENTITY_NAME -g $CLUSTER_RG --query id -o tsv)
+IDENTITY=$(az identity create -k $AZ_AKS_VERSION -n $IDENTITY_NAME -g $CLUSTER_RG --query id -o tsv)
 IDENTITY_CLIENTID=$(az identity show -g $CLUSTER_RG -n $IDENTITY_NAME -o tsv --query clientId)
 
 DNS_ID=$(az network dns zone show --name $AZURE_DNS_ZONE \
@@ -54,11 +55,12 @@ az role assignment create --role "DNS Zone Contributor" --assignee $IDENTITY_CLI
 Create an AKS cluster with the following command:
 
 ```bash
-az aks create -k 1.26.0 -y -g $CLUSTER_RG -s Standard_B4ms -c $NODE_COUNT  \
+az aks create -k $AZ_AKS_VERSION -y -g $CLUSTER_RG -s Standard_B4ms -c $NODE_COUNT  \
 --assign-identity $IDENTITY --assign-kubelet-identity $IDENTITY --network-plugin kubenet -n $CLUSTER_NAME
 ```
 
 Connect to the AKS cluster:
+
 ```bash
 az aks get-credentials --resource-group $CLUSTER_RG --name $CLUSTER_NAME
 ```
@@ -127,7 +129,7 @@ export EXP_MACHINE_POOL=true
 
 # Create an Azure Service Principal in the Azure portal. (Note: Make sure this Service Principal has access to the resource group)
 # Create an Azure Service Principal
-export AZURE_SP_NAME="kubecon23capi"
+export AZURE_SP_NAME="kubecon23capi$RANDOM"
 
 export AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 export AZURE_TENANT_ID=$(az account show --query tenantId -o tsv)
@@ -152,6 +154,10 @@ kubectl create secret generic "${AZURE_CLUSTER_IDENTITY_SECRET_NAME}" --from-lit
 # Initialize the management cluster for azure
 clusterctl init --infrastructure azure
 
+sleep 10
 # Create and apply an AzureClusterIdentity
 envsubst < manifests/templates/aks-cluster-identity.yaml | kubectl apply -f -
-``
+
+# Check the providers
+kubectl get providers.clusterctl.cluster.x-k8s.io -A
+```
