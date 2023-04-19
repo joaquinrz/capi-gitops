@@ -18,11 +18,11 @@ server:
     ingressClassName: nginx
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      external-dns.alpha.kubernetes.io/hostname: argocd.kubespaces.io
+      external-dns.alpha.kubernetes.io/hostname: argocd.${AZURE_DNS_ZONE}
     hosts: 
-    - argocd.kubespaces.io
+    - argocd.${AZURE_DNS_ZONE}
     tls:
       - secretName: argocd-tls
         hosts:
-          - argocd.kubespaces.io
+          - argocd.${AZURE_DNS_ZONE}
     https: true
