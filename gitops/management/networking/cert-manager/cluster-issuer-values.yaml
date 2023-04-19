@@ -1,4 +1,4 @@
-_: &email alessandro@kubespaces.io
+_: &email alessandro@k8sis.fun
 _: &solvers
 - http01:
     ingress:

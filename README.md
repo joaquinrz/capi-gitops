@@ -29,7 +29,7 @@ export CLUSTER_NAME=management
 export LOCATION=westeurope
 export IDENTITY_NAME=gitops$RANDOM
 export NODE_COUNT=2
-export AZURE_DNS_ZONE=kubespaces.io
+export AZURE_DNS_ZONE=k8sis.fun
 export AZURE_DNS_ZONE_RESOURCE_GROUP=dns
 ```
 
@@ -104,7 +104,7 @@ Verify that ArgoCD is running:
 kubectl get pods -n argocd
 ```
 
-Access the ArgoCD web UI by running the following command, and then open the URL in a web browser:
+Access the ArgoCD web UI by running the following command, and then open the URL in a web browser (ingress, external-dns and cert-manager take care of certificates and DNS hostname resolution):
 
 ```bash
 open https://argocd.$AZURE_DNS_ZONE

@@ -1,6 +1,6 @@
 syncer:
   extraArgs:
-  - --tls-san=w2.vcluster.kubespaces.io
+  - --tls-san=w2.vcluster.k8sis.fun
 sync:
   ingresses:
     enabled: true

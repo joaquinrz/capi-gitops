@@ -33,7 +33,7 @@ queryFrontend:
       nginx.ingress.kubernetes.io/auth-type: basic
       nginx.ingress.kubernetes.io/auth-secret: basic-auth
       nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - thanos'
-    hostname: query.thanos.kubespaces.io
+    hostname: query.thanos.k8sis.fun
     ingressClassName: nginx
     tls: true
 
@@ -78,7 +78,7 @@ receive:
       nginx.ingress.kubernetes.io/auth-type: basic
       nginx.ingress.kubernetes.io/auth-secret: basic-auth
       nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - thanos'
-    hostname: receive.thanos.kubespaces.io
+    hostname: receive.thanos.k8sis.fun
     ingressClassName: nginx
     tls: true
 
