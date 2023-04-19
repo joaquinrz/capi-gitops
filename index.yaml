@@ -11,6 +11,14 @@ entries:
     version: 0.0.1
   imdb:
   - apiVersion: v2
+    created: "2023-04-19T14:58:51.951202355Z"
+    description: A Helm chart for deploying IMDB app
+    digest: a07c2b37e53f3e6e34f3a641812a961fe3d9f63d7fb074b81f3a32adb59e8154
+    name: imdb
+    urls:
+    - https://github.com/joaquinrz/capi-gitops/releases/download/imdb-0.0.2/imdb-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2023-04-19T14:34:21.065808761Z"
     description: A Helm chart for deploying IMDB app
     digest: ab3d484115992bcdf1810e94af7f1ac9dadd5df03b9edf37762034913ef6f03b
@@ -18,4 +26,4 @@ entries:
     urls:
     - https://github.com/joaquinrz/capi-gitops/releases/download/imdb-0.0.1/imdb-0.0.1.tgz
     version: 0.0.1
-generated: "2023-04-19T14:34:21.065814461Z"
+generated: "2023-04-19T14:58:51.951209155Z"
