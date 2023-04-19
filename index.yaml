@@ -9,4 +9,13 @@ entries:
     urls:
     - https://github.com/joaquinrz/capi-gitops/releases/download/capi-aks-0.0.1/capi-aks-0.0.1.tgz
     version: 0.0.1
-generated: "2023-04-16T07:58:14.601834757Z"
+  imdb:
+  - apiVersion: v2
+    created: "2023-04-19T14:34:21.065808761Z"
+    description: A Helm chart for deploying IMDB app
+    digest: ab3d484115992bcdf1810e94af7f1ac9dadd5df03b9edf37762034913ef6f03b
+    name: imdb
+    urls:
+    - https://github.com/joaquinrz/capi-gitops/releases/download/imdb-0.0.1/imdb-0.0.1.tgz
+    version: 0.0.1
+generated: "2023-04-19T14:34:21.065814461Z"
