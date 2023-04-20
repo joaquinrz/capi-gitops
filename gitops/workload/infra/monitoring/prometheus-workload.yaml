@@ -32,7 +32,7 @@ spec:
           valueFiles:
           - $values/gitops/workload/infra/monitoring/prometheus-workload-values.yaml
       - repoURL: https://github.com/joaquinrz/capi-gitops.git
-        targetRevision: alessandro
+        targetRevision: main
         ref: values
       destination:
         server: '{{server}}'

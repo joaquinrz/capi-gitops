@@ -11,7 +11,7 @@ spec:
   project: infra
   source:
     path: gitops/workload/appset
-    targetRevision: alessandro
+    targetRevision: main
     directory:
       recurse: true
       exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml}'

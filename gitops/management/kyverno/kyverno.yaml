@@ -21,7 +21,7 @@ spec:
       valueFiles:
       - $values/gitops/management/kyverno/kyverno-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
-    targetRevision: alessandro
+    targetRevision: main
     ref: values
   syncPolicy:
     automated:
@@ -51,7 +51,7 @@ spec:
   project: infra
   source:
     path: "gitops/management/kyverno/policies"
-    targetRevision: alessandro
+    targetRevision: main
     directory:
       recurse: true
     repoURL: https://github.com/joaquinrz/capi-gitops.git

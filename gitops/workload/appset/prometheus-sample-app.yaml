@@ -16,7 +16,7 @@ spec:
       project: workload
       source:
         repoURL: https://github.com/joaquinrz/capi-gitops.git
-        targetRevision: alessandro
+        targetRevision: main
         path: apps/simple
       destination:
         server: '{{server}}'

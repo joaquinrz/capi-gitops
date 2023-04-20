@@ -10,7 +10,7 @@ spec:
   project: infra
   source:
     path: gitops/management
-    targetRevision: alessandro
+    targetRevision: main
     directory:
       recurse: true
       exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml,*resource.yaml}'

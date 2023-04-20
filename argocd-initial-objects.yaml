@@ -6,7 +6,7 @@ applications:
   project: infra
   source:
     repoURL: https://github.com/joaquinrz/capi-gitops
-    targetRevision: alessandro
+    targetRevision: main
     path: gitops/management
     directory:
       recurse: true

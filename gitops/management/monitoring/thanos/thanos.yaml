@@ -30,7 +30,7 @@ spec:
       valueFiles:
       - $values/gitops/management/monitoring/thanos/thanos-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
-    targetRevision: alessandro
+    targetRevision: main
     ref: values
   syncPolicy:
     automated:

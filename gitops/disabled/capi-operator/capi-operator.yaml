@@ -73,7 +73,7 @@ spec:
   project: infra
   source:
     path: "gitops/management/capi-operator/resources"
-    targetRevision: alessandro
+    targetRevision: main
     directory:
       recurse: true
     repoURL: https://github.com/joaquinrz/capi-gitops.git
