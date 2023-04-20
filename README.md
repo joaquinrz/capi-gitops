@@ -27,8 +27,8 @@ To create a new management cluster in AKS, run the following commands. Otherwise
 
 ```bash
 export AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-export CLUSTER_RG=clusters
-export CLUSTER_NAME=management
+export CLUSTER_RG=kubecon23eu
+export CLUSTER_NAME=gru
 export LOCATION=westeurope
 export IDENTITY_NAME=gitops$RANDOM
 export NODE_COUNT=2
@@ -46,8 +46,10 @@ az group create --name $CLUSTER_RG --location $LOCATION
 To use automatic DNS name updates via external-dns, we need to create a new managed identity and assign the role of DNS Contributor to the resource group containg the zone resource  
 
 ```bash
-IDENTITY=$(az identity create -k $AZ_AKS_VERSION -n $IDENTITY_NAME -g $CLUSTER_RG --query id -o tsv)
+IDENTITY=$(az identity create  -n $IDENTITY_NAME -g $CLUSTER_RG --query id -o tsv)
 IDENTITY_CLIENTID=$(az identity show -g $CLUSTER_RG -n $IDENTITY_NAME -o tsv --query clientId)
+
+sleep 5
 
 DNS_ID=$(az network dns zone show --name $AZURE_DNS_ZONE \
   --resource-group $AZURE_DNS_ZONE_RESOURCE_GROUP --query "id" --output tsv)
@@ -58,8 +60,10 @@ az role assignment create --role "DNS Zone Contributor" --assignee $IDENTITY_CLI
 Create an AKS cluster with the following command:
 
 ```bash
-az aks create -k $AZ_AKS_VERSION -y -g $CLUSTER_RG -s Standard_B4ms -c $NODE_COUNT  \
---assign-identity $IDENTITY --assign-kubelet-identity $IDENTITY --network-plugin kubenet -n $CLUSTER_NAME
+az aks create -k $AZ_AKS_VERSION -y -g $CLUSTER_RG \
+    -s Standard_B4ms -c $NODE_COUNT \
+    --assign-identity $IDENTITY --assign-kubelet-identity $IDENTITY \
+    --network-plugin kubenet -n $CLUSTER_NAME
 ```
 
 Connect to the AKS cluster:
