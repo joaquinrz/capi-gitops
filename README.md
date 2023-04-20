@@ -28,7 +28,7 @@ To create a new management cluster in AKS, run the following commands. Otherwise
 ```bash
 export AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 export CLUSTER_RG=kubecon23eu
-export CLUSTER_NAME=gru
+export CLUSTER_NAME=gruu
 export LOCATION=westeurope
 export IDENTITY_NAME=gitops$RANDOM
 export NODE_COUNT=2
@@ -49,7 +49,8 @@ To use automatic DNS name updates via external-dns, we need to create a new mana
 IDENTITY=$(az identity create  -n $IDENTITY_NAME -g $CLUSTER_RG --query id -o tsv)
 IDENTITY_CLIENTID=$(az identity show -g $CLUSTER_RG -n $IDENTITY_NAME -o tsv --query clientId)
 
-sleep 5
+echo "Sleeping a bit (35 seconds) to let AAD catch up..."
+sleep 35
 
 DNS_ID=$(az network dns zone show --name $AZURE_DNS_ZONE \
   --resource-group $AZURE_DNS_ZONE_RESOURCE_GROUP --query "id" --output tsv)
@@ -95,12 +96,10 @@ helm repo update
 Edit the `gitops/management/argocd/argocd-values.yaml` with your hostname and domain name for ArgoCD ingress, then install ArgoCD:
 
 ```bash
-envsubst < gitops/management/argocd/argocd-values.yaml > gitops/management/argocd/argocd-values-local.yaml
-
 helm upgrade -i -n argocd \
   --version 5.29.1 \
   --create-namespace \
-  --values gitops/management/argocd/argocd-values-local.yaml \
+  --values gitops/management/argocd/argocd-values.yaml \
   argocd argo/argo-cd
 
 helm upgrade -i -n argocd \

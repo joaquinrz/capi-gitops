@@ -25,11 +25,14 @@ export AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE=$1
 
 # Create a secret to include the password of the Service Principal identity created in Azure
 # This secret will be referenced by the AzureClusterIdentity used by the AzureCluster
-kubectl create secret generic "${AZURE_CLUSTER_IDENTITY_SECRET_NAME}" --from-literal=clientSecret="${AZURE_CLIENT_SECRET}" -n ${AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE}
+kubectl create secret generic "${AZURE_CLUSTER_IDENTITY_SECRET_NAME}" \
+--from-literal=clientSecret="${AZURE_CLIENT_SECRET}" \
+--from-literal=clientId="${AZURE_CLIENT_ID}" \
+-n ${AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE}
 
 # Initialize the management cluster for azure
-clusterctl init --infrastructure azure
+clusterctl init --bootstrap "-" --control-plane "-" --infrastructure azure
 
-sleep 10
+#sleep 10
 # Create and apply an AzureClusterIdentity
-envsubst < manifests/templates/aks-cluster-identity.yaml | kubectl apply -f -
+#envsubst < manifests/templates/aks-cluster-identity.yaml | kubectl apply -f -
