@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: prometheus-workload
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   generators:
   - clusters:
