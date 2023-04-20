@@ -10,7 +10,7 @@ spec:
   - clusters:
       selector:
         matchLabels:
-          ppolicy.kyverno.io/synchronize: enable  
+          policy.kyverno.io/synchronize: enable  
   template:
     metadata:
       name: '{{name}}-prometheus'
