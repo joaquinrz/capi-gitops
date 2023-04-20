@@ -16,6 +16,7 @@ For our sample will be using Azure Kubernetes Service (AKS). Before starting, yo
 
 - An Azure account (already logged in with the Azure CLI)
 - Azure CLI [download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+- [Helm CLI](https://helm.sh) and `envsubst`
 - Optional but recommented (and the instructions below assume you have one) A working DNS zone in Azure, to use proper DNS names and automatic certifcates provisioning with Let'sEncrypt
 
 Everything else is installed via ArgoCD, so no need for any extra CLI!
