@@ -1,0 +1,23 @@
+global:
+  rbac:
+    create: true
+    pspEnabled: false
+nodeExporter:
+  enabled: false
+alertmanager:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubelet:
+  enabled: false
+  serviceMonitor:
+    cAdvisor: false
+kube-state-metrics:
+  metricLabelsAllowlist:
+  - nodes=[agentpool,node_kubernetes_io_instance-type]
+grafana:
+  enabled: false

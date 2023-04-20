@@ -1,0 +1,10 @@
+azure:
+  resourceGroup: dns
+  tenantId: 30c10907-19b2-4fb8-9272-a4a539628560
+  subscriptionId: 1c51d1c3-d83d-4d71-ace1-df3496eddac4
+  useManagedIdentityExtension: true
+provider: azure
+txtOwnerId: "management"
+domainFilters:
+- k8sis.fun
+

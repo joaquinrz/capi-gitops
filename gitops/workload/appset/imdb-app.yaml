@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: imdb
+  namespace: argocd
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          policy.kyverno.io/policy-name: sync-secret  
+  template:
+    metadata:
+      name: '{{name}}-imdb'
+    spec:
+      project: workload
+      sources:
+      - repoURL: 'https://joaquinrz.github.io/capi-gitops/'
+        targetRevision: "0.0.3"
+        chart: imdb
+        helm:
+          values: |
+            prometheusReleaseName: {{name}}-prometheus
+      destination:
+        server: '{{server}}'
+        namespace: imdb
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

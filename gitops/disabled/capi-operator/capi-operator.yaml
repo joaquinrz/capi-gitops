@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: capi-operator-system
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: capi-operator
+  namespace: capi-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  ignoreDifferences:
+    - group:  apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: bootstrapproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec
+    - group:  apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: controlplaneproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec
+    - group:  apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: coreproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec
+    - group:  apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: infrastructureproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec
+  destination:
+    namespace: capi-operator-system
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    repoURL: 'https://kubernetes-sigs.github.io/cluster-api-operator'
+    targetRevision: "0.2.0"
+    chart: cluster-api-operator
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: -1 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+      backoff:
+        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: capi-system
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: capiz-resources
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    path: "gitops/management/capi-operator/resources"
+    targetRevision: main
+    directory:
+      recurse: true
+    repoURL: https://github.com/joaquinrz/capi-gitops.git
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 10m
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: capz-system

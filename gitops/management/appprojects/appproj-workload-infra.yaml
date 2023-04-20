@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: workload-infra
+  namespace: argocd
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Workload infrastructure components
+  sourceNamespaces:
+  - "*"
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+    - "*"
+  # Only permit applications to deploy to the guestbook namespace in the same cluster
+  destinations:
+    - namespace: "*"
+      server: "*"

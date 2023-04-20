@@ -1,0 +1,6 @@
+syncer:
+  extraArgs:
+  - --tls-san=w2.vcluster.k8sis.fun
+sync:
+  ingresses:
+    enabled: true

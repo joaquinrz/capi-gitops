@@ -1,0 +1,4 @@
+installCRDs: true
+webhook:
+  validatingWebhookConfigurationAnnotations:
+    admissions.enforcer/disabled: "true"

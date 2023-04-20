@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prometheus-workload
+  namespace: argocd
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          policy.kyverno.io/policy-name: sync-secret  
+  template:
+    metadata:
+      name: '{{name}}-prometheus'
+    spec:
+      project: workload-infra
+      sources:
+      - repoURL: 'https://prometheus-community.github.io/helm-charts/'
+        targetRevision: "45.10.1"
+        chart: kube-prometheus-stack
+        helm:
+          values: |
+            prometheus:
+              enabled: true
+              prometheusSpec:
+                externalLabels:
+                  region: westeurope
+                  cluster: {{name}}
+                remoteWrite:
+                - url: "http://thanos-receive.thanos:19291/api/v1/receive"
+                  name: Thanos
+          valueFiles:
+          - $values/gitops/workload/infra/monitoring/prometheus-workload-values.yaml
+      - repoURL: https://github.com/joaquinrz/capi-gitops.git
+        targetRevision: main
+        ref: values
+      destination:
+        server: '{{server}}'
+        namespace: prometheus
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

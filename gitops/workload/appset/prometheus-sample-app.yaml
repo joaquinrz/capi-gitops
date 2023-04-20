@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prometheus-sample-app
+  namespace: argocd
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          policy.kyverno.io/policy-name: sync-secret  
+  template:
+    metadata:
+      name: '{{name}}-prometheus-sample-app'
+    spec:
+      project: workload
+      source:
+        repoURL: https://github.com/joaquinrz/capi-gitops.git
+        targetRevision: main
+        path: apps/simple
+      destination:
+        server: '{{server}}'
+        namespace: demo
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

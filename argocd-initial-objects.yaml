@@ -1,0 +1,40 @@
+applications:
+- name: root-app-infra
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  project: infra
+  source:
+    repoURL: https://github.com/joaquinrz/capi-gitops
+    targetRevision: main
+    path: gitops/management
+    directory:
+      recurse: true
+      exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml,*resource.yaml}'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: false
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+
+projects:
+- name: infra
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  description: Infrastructure components on management cluster
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: "*"
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  sourceNamespaces:
+  - '*'
