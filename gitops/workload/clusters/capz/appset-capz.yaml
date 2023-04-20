@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: capz-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: management
+        url: https://kubernetes.default.svc
+        workload-cluster: worker1
+      - cluster: management
+        url: https://kubernetes.default.svc
+        workload-cluster: worker2
+      - cluster: management
+        url: https://kubernetes.default.svc
+        workload-cluster: worker3
+  template:
+    metadata:
+      name: '{{workload-cluster}}'
+    spec:
+      project: clusters
+      source:
+        repoURL: 'https://joaquinrz.github.io/capi-gitops'
+        targetRevision: 0.0.1
+        chart: capi-aks
+        helm:
+          values: |
+            controlAgentPoolNodeSize: Standard_B4ms
+            workerAgentPoolNodeSize: Standard_B4ms
+            location: westeurope
+            name: '{{workload-cluster}}'
+            subscriptionId: 1c51d1c3-d83d-4d71-ace1-df3496eddac4
+      destination:
+        server: '{{url}}'
+        namespace: '{{workload-cluster}}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

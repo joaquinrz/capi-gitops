@@ -79,7 +79,9 @@ ArgoCD is an open-source continuous delivery tool designed to simplify the deplo
 
 You can install ArgoCD on your Kubernetes cluster by running the following commands in your terminal or command prompt. These commands will download and install ArgoCD on your cluster, allowing you to use it for GitOps-based continuous delivery of your applications
 
-Add ArgoCD Helm Repo
+> **_NOTE:_** Make sure to update the values for ingress hostname in the various helm charts under `gitos/management` folder; we will update the readme when we find a better way to dynamically inject these values into the helm charts deployed by ArgoCD
+
+Add ArgoCD Helm Repo:
 
 ```bash
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -90,6 +92,7 @@ Edit the `gitops/management/argocd/argocd-values.yaml` with your hostname and do
 
 ```bash
 envsubst < gitops/management/argocd/argocd-values.yaml > gitops/management/argocd/argocd-values-local.yaml
+
 helm upgrade -i -n argocd \
   --version 5.29.1 \
   --create-namespace \
@@ -115,13 +118,10 @@ Access the ArgoCD web UI by running the following command, and then open the URL
 open https://argocd.$AZURE_DNS_ZONE
 ```
 
-ArgoCD is in read-only mode for anonymous users, that should be enough to monitor the installaation progress, but if you want to change things, retrieve the secret with:
+> **_NOTE:_** ArgoCD is in read-only mode for anonymous users, that should be enough to monitor the installaation progress, but if you want to change things, retrieve the secret with: 
+> `kubectl get secret -n argocd argocd-initial-admin-secret  -o=jsonpath='{.data.password}'| base64 -D`
 
-```bash
-kubectl get secret -n argocd argocd-initial-admin-secret  -o=jsonpath='{.data.password}'| base64 -D
-```
-
-## Step 2:  Bootstrap Management Cluster with ClusterAPI
+## Step 3:  Bootstrap Management Cluster with ClusterAPI
 
 To initialize the AKS cluster with Cluster API and turn it into the management cluster, follow these instructions. Once initialized, the management cluster will allow you to control and maintain a fleet of ephemeral clusters. Unfortunately this part cannot be automated via ArgoCD just yet, although a promising effort is made in the `capi-operator` [repository](https://github.com/kubernetes-sigs/cluster-api-operator/tree/main):
 
@@ -133,3 +133,7 @@ To initialize the AKS cluster with Cluster API and turn it into the management c
 # Check the providers
 kubectl get providers.clusterctl.cluster.x-k8s.io -A
 ```
+
+## Step 4:  Deploy clusters via Pull Requests
+
+Open a PR against your main branch, modifying 
