@@ -2,6 +2,8 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
+Session @KubeconEU 2023 in Amsterdam: [<https://sched.co/1HyXe>](https://sched.co/1HyXe)
+
 ## Overview
 
 Welcome to Ephemeral Clusters as a Service with [vClusters](https://www.vcluster.com), [ClusterAPI](https://cluster-api.sigs.k8s.io) and [ArgoCD](https://argo-cd.readthedocs.io/en/stable/). GitOps has rapidly gained popularity in recent years, with its many benefits over traditional CI/CD tools. However, with increased adoption comes the challenge of managing multiple Kubernetes clusters across different cloud providers. At scale, ensuring observability and security across all clusters can be particularly difficult.
@@ -123,40 +125,9 @@ kubectl get secret -n argocd argocd-initial-admin-secret  -o=jsonpath='{.data.pa
 To initialize the AKS cluster with Cluster API and turn it into the management cluster, follow these instructions. Once initialized, the management cluster will allow you to control and maintain a fleet of ephemeral clusters. Unfortunately this part cannot be automated via ArgoCD just yet, although a promising effort is made in the `capi-operator` [repository](https://github.com/kubernetes-sigs/cluster-api-operator/tree/main):
 
 ```bash
-# Enable support for managed topologies and experimental features
-export CLUSTER_TOPOLOGY=true
-export EXP_MACHINE_POOL=true
+# Run the script, passing the namespace as a parameter (the Azure Managed Identity for the workload clusters)
 
-# Create an Azure Service Principal in the Azure portal. (Note: Make sure this Service Principal has access to the resource group)
-# Create an Azure Service Principal
-export AZURE_SP_NAME="kubecon23capi$RANDOM"
-
-export AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-export AZURE_TENANT_ID=$(az account show --query tenantId -o tsv)
-export AZURE_CLIENT_SECRET=$(az ad sp create-for-rbac --name $AZURE_SP_NAME --role contributor --scopes="/subscriptions/${AZURE_SUBSCRIPTION_ID}" --query password -o tsv)
-export AZURE_CLIENT_ID=$(az ad sp list --display-name $AZURE_SP_NAME --query "[0].appId" -o tsv)
-
-# Base64 encode the variables
-export AZURE_SUBSCRIPTION_ID_B64="$(echo -n "$AZURE_SUBSCRIPTION_ID" | base64 | tr -d '\n')"
-export AZURE_TENANT_ID_B64="$(echo -n "$AZURE_TENANT_ID" | base64 | tr -d '\n')"
-export AZURE_CLIENT_ID_B64="$(echo -n "$AZURE_CLIENT_ID" | base64 | tr -d '\n')"
-export AZURE_CLIENT_SECRET_B64="$(echo -n "$AZURE_CLIENT_SECRET" | base64 | tr -d '\n')"
-
-# Settings needed for AzureClusterIdentity used by the AzureCluster
-export AZURE_CLUSTER_IDENTITY_SECRET_NAME="cluster-identity-secret"
-export CLUSTER_IDENTITY_NAME="cluster-identity"
-export AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE="default"
-
-# Create a secret to include the password of the Service Principal identity created in Azure
-# This secret will be referenced by the AzureClusterIdentity used by the AzureCluster
-kubectl create secret generic "${AZURE_CLUSTER_IDENTITY_SECRET_NAME}" --from-literal=clientSecret="${AZURE_CLIENT_SECRET}" -n ${AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE}
-
-# Initialize the management cluster for azure
-clusterctl init --infrastructure azure
-
-sleep 10
-# Create and apply an AzureClusterIdentity
-envsubst < manifests/templates/aks-cluster-identity.yaml | kubectl apply -f -
+./capz-init.sh default 
 
 # Check the providers
 kubectl get providers.clusterctl.cluster.x-k8s.io -A
