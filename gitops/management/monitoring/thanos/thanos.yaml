@@ -3,15 +3,6 @@ kind: Namespace
 metadata:
     name: thanos
 ---
-apiVersion: v1
-data:
-  auth: dGhhbm9zOiRhcHIxJDhsR01EZkcuJE1DMnpYekRhem1lYjhZM1VscTQ4aTAK
-kind: Secret
-metadata:
-  name: basic-auth
-  namespace: thanos
-type: Opaque
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
