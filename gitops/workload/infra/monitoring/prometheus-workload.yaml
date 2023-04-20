@@ -31,6 +31,9 @@ spec:
                 remoteWrite:
                 - url: "http://receive.thanos.k8sis.fun/api/v1/receive"
                   name: Thanos
+                  basicAuth:
+                    username: thanos
+                    password: thanos
           valueFiles:
           - $values/gitops/workload/infra/monitoring/prometheus-workload-values.yaml
       - repoURL: https://github.com/joaquinrz/capi-gitops.git
