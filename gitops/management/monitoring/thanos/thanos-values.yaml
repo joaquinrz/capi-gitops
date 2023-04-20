@@ -72,9 +72,6 @@ receive:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      nginx.ingress.kubernetes.io/auth-type: basic
-      nginx.ingress.kubernetes.io/auth-secret: basic-auth
-      nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - thanos'
     hostname: receive.thanos.k8sis.fun
     ingressClassName: nginx
     tls: true
