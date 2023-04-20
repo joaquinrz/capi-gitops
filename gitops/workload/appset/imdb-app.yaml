@@ -8,7 +8,7 @@ spec:
   - clusters:
       selector:
         matchLabels:
-          policy.kyverno.io/policy-name: sync-secret  
+          policy.kyverno.io/synchronize: enable
   template:
     metadata:
       name: '{{name}}-imdb'
