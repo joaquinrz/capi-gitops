@@ -3,6 +3,7 @@ location: southcentralus
 clusterResourceGroupName: worker
 subscriptionId:
 k8sVersion: v1.24.10
+sshPublicKey: ""
 controlAgentPoolNodes: 2
 controlAgentPoolNodeSize: Standard_D2s_v5
 workerAgentPoolNodes: 2
