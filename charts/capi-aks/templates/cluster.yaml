@@ -29,6 +29,7 @@ spec:
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
     kind: AzureClusterIdentity
     name: cluster-identity
+    namespace: default
   location: {{ .Values.location }}
   resourceGroupName: {{ .Values.clusterResourceGroupName }}
   sshPublicKey: {{ .Values.sshPublicKey }}
