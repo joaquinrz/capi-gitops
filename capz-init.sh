@@ -12,6 +12,9 @@ export AZURE_TENANT_ID=$(az account show --query tenantId -o tsv)
 export AZURE_CLIENT_SECRET=$(az ad sp create-for-rbac --name $AZURE_SP_NAME --role contributor --scopes="/subscriptions/${AZURE_SUBSCRIPTION_ID}" --query password -o tsv)
 export AZURE_CLIENT_ID=$(az ad sp list --display-name $AZURE_SP_NAME --query "[0].appId" -o tsv)
 
+az role assignment create \
+--role "Contributor" --assignee $AZURE_CLIENT_ID --scope $AZURE_SUBSCRIPTION_ID
+
 # Base64 encode the variables
 export AZURE_SUBSCRIPTION_ID_B64="$(echo -n "$AZURE_SUBSCRIPTION_ID" | base64 | tr -d '\n')"
 export AZURE_TENANT_ID_B64="$(echo -n "$AZURE_TENANT_ID" | base64 | tr -d '\n')"
