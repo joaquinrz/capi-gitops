@@ -23,12 +23,13 @@ spec:
       project: clusters
       source:
         repoURL: 'https://joaquinrz.github.io/capi-gitops'
-        targetRevision: 0.0.1
+        targetRevision: 0.0.3
         chart: capi-aks
         helm:
           values: |
             controlAgentPoolNodeSize: Standard_B4ms
             workerAgentPoolNodeSize: Standard_B4ms
+            sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIOxg+goSYoCIND3IIAjPoPGr7gsux9OQjE5IP2wEU8eMsywgGXBwZXUVjh8NgFHVWZEMTQCAM52P2ipYBup9QhuqWVjH4v0hrj1X/rx7tzlZh2wk3kgVPQwMKCyacQLifqus4quJLSQAPu1ksgxaWEBWnSa0e+DM2D0PYs/j284qOO9T9ULqpb/ZJK9gySa+AfSMhGCskcT/EfE8g1iqC96PajFxGHOBxqiDFtIKPhNiqKYruDhVJYmhAXG6ScHadiXzP3BdiPR66eyCOQtSeIxjnEeJcrZ7vZLFpWQvaaZw+JfPkGGFCsBTn39dfr1awrMtPIPvkj4iU1jkGKzUD alessandro@Alessandros-MBP.fritz.box"
             location: westeurope
             name: '{{workload-cluster}}'
             subscriptionId: 1c51d1c3-d83d-4d71-ace1-df3496eddac4
