@@ -13,12 +13,6 @@ spec:
       - cluster: management
         url: https://kubernetes.default.svc
         workload-cluster: worker5
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: worker2
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: worker1
   template:
     metadata:
       name: '{{workload-cluster}}'
