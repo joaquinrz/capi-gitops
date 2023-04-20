@@ -29,7 +29,7 @@ spec:
                   region: westeurope
                   cluster: {{name}}
                 remoteWrite:
-                - url: "http://thanos-receive.thanos:19291/api/v1/receive"
+                - url: "http://receive.thanos.k8sis.fun/api/v1/receive"
                   name: Thanos
           valueFiles:
           - $values/gitops/workload/infra/monitoring/prometheus-workload-values.yaml
