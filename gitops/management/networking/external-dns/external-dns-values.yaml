@@ -6,5 +6,5 @@ azure:
 provider: azure
 txtOwnerId: "management"
 domainFilters:
-- k8sis.fun
+- kube101.dev
 

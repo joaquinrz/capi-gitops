@@ -18,11 +18,11 @@ server:
     ingressClassName: nginx
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      external-dns.alpha.kubernetes.io/hostname: argocd.k8sis.fun
+      external-dns.alpha.kubernetes.io/hostname: argocd.kube101.dev
     hosts: 
-    - argocd.k8sis.fun
+    - argocd.kube101.dev
     tls:
       - secretName: argocd-tls
         hosts:
-          - argocd.k8sis.fun
+          - argocd.kube101.dev
     https: true

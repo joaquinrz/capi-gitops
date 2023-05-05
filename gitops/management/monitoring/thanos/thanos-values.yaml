@@ -30,7 +30,7 @@ queryFrontend:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-    hostname: query.thanos.k8sis.fun
+    hostname: query.thanos.kube101.dev
     ingressClassName: nginx
     tls: true
 
@@ -72,7 +72,7 @@ receive:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-    hostname: receive.thanos.k8sis.fun
+    hostname: receive.thanos.kube101.dev
     ingressClassName: nginx
     tls: true
 
