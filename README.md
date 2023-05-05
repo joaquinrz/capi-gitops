@@ -2,7 +2,8 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-Session @KubeconEU 2023 in Amsterdam: [<https://sched.co/1HyXe>](https://sched.co/1HyXe)
+- Session @KubeconEU 2023 in Amsterdam: [<https://sched.co/1HyXe>](https://sched.co/1HyXe)
+- Session @Open Source Summit 2023 in Vancouver: [<https://sched.co/1K5IB>](https://sched.co/1K5IB)
 
 ## Overview
 
@@ -27,13 +28,15 @@ To create a new management cluster in AKS, run the following commands. Otherwise
 
 ```bash
 export AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-export CLUSTER_RG=kubecon23eu
-export CLUSTER_NAME=gruu
-export LOCATION=westeurope
+az account set --subscription $AZURE_SUBSCRIPTION_ID
+
+export CLUSTER_RG=management
+export CLUSTER_NAME=gru
+export LOCATION=southcentralus
 export IDENTITY_NAME=gitops$RANDOM
 export NODE_COUNT=2
 export AZ_AKS_VERSION=1.25.6
-export AZURE_DNS_ZONE=k8sis.fun
+export AZURE_DNS_ZONE=kube101.dev
 export AZURE_DNS_ZONE_RESOURCE_GROUP=dns
 ```
 
@@ -46,13 +49,13 @@ az group create --name $CLUSTER_RG --location $LOCATION
 To use automatic DNS name updates via external-dns, we need to create a new managed identity and assign the role of DNS Contributor to the resource group containg the zone resource  
 
 ```bash
-IDENTITY=$(az identity create  -n $IDENTITY_NAME -g $CLUSTER_RG --query id -o tsv)
-IDENTITY_CLIENTID=$(az identity show -g $CLUSTER_RG -n $IDENTITY_NAME -o tsv --query clientId)
+export IDENTITY=$(az identity create  -n $IDENTITY_NAME -g $CLUSTER_RG --query id -o tsv)
+export IDENTITY_CLIENTID=$(az identity show -g $CLUSTER_RG -n $IDENTITY_NAME -o tsv --query clientId)
 
 echo "Sleeping a bit (35 seconds) to let AAD catch up..."
 sleep 35
 
-DNS_ID=$(az network dns zone show --name $AZURE_DNS_ZONE \
+export DNS_ID=$(az network dns zone show --name $AZURE_DNS_ZONE \
   --resource-group $AZURE_DNS_ZONE_RESOURCE_GROUP --query "id" --output tsv)
 
 az role assignment create --role "DNS Zone Contributor" --assignee $IDENTITY_CLIENTID --scope $DNS_ID
