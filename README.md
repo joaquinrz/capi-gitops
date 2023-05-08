@@ -87,7 +87,7 @@ ArgoCD is an open-source continuous delivery tool designed to simplify the deplo
 
 You can install ArgoCD on your Kubernetes cluster by running the following commands in your terminal or command prompt. These commands will download and install ArgoCD on your cluster, allowing you to use it for GitOps-based continuous delivery of your applications
 
-> **_NOTE:_** Make sure to update the values for ingress hostname in the various helm charts under `gitos/management` folder; we will update the readme when we find a better way to dynamically inject these values into the helm charts deployed by ArgoCD
+> **_NOTE:_** Make sure to update the values for ingress hostname in the various helm charts under `gitops/management` folder; we will update the readme when we find a better way to dynamically inject these values into the helm charts deployed by ArgoCD
 
 Add ArgoCD Helm Repo:
 
