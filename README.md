@@ -134,7 +134,7 @@ To initialize the AKS cluster with Cluster API and turn it into the management c
 ```bash
 # Run the script, passing the namespace as a parameter (the Azure Managed Identity for the workload clusters)
 
-./capz-init.sh default 
+./capz-init.sh 
 
 # Check the providers
 kubectl get providers.clusterctl.cluster.x-k8s.io -A
