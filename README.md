@@ -142,4 +142,4 @@ kubectl get providers.clusterctl.cluster.x-k8s.io -A
 
 ## Step 4:  Deploy clusters via Pull Requests
 
-Open a PR against your main branch, modifying 
+Open a PR against your main branch, modifying the appset-capz.yaml or appset-vcluster.yaml to deploy your ephemeral clusters!
