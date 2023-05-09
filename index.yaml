@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   capi-aks:
   - apiVersion: v2
+    created: "2023-05-09T02:23:37.560600388Z"
+    description: A Helm chart for deploying AKS worker cluster using CAPZ
+    digest: 5fc24a5d8a9636e0d24d2eed6c55b370523ddb53e722eb40df31e56e0edca1ee
+    name: capi-aks
+    urls:
+    - https://github.com/joaquinrz/capi-gitops/releases/download/capi-aks-0.0.6/capi-aks-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
     created: "2023-04-20T10:11:19.235313782Z"
     description: A Helm chart for deploying AKS worker cluster using CAPZ
     digest: 3a79d4596db816ae47cd9b7c39db292f980f8f6aac5227ada9ff888dc379b704
@@ -66,4 +74,4 @@ entries:
     urls:
     - https://github.com/joaquinrz/capi-gitops/releases/download/imdb-0.0.1/imdb-0.0.1.tgz
     version: 0.0.1
-generated: "2023-04-20T10:11:19.235337982Z"
+generated: "2023-05-09T02:23:37.56071379Z"
