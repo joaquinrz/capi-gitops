@@ -17,7 +17,7 @@ spec:
       project: clusters
       source:
         repoURL: 'https://joaquinrz.github.io/capi-gitops'
-        targetRevision: 0.0.5
+        targetRevision: 0.0.6
         chart: capi-aks
         helm:
           values: |
