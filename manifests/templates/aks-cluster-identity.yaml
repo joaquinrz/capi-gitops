@@ -3,7 +3,7 @@ kind: AzureClusterIdentity
 metadata:
   labels:
     clusterctl.cluster.x-k8s.io/move-hierarchy: "true"
-  name: cluster-identity-secret
+  name: cluster-identity
   namespace: $AZURE_CLUSTER_IDENTITY_SECRET_NAMESPACE
 spec:
   allowedNamespaces: {}
