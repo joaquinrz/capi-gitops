@@ -33,13 +33,13 @@ ingress:
   enabled: true
   ingressClassName: nginx
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: dash.kube101.dev
+    external-dns.alpha.kubernetes.io/hostname: dash.joaquin.dev
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - dash.kube101.dev
+    - dash.joaquin.dev
   path: /
   pathType: ImplementationSpecific
   tls:
   - secretName: grafana-general-tls
     hosts:
-    - dash.kube101.dev
+    - dash.joaquin.dev

@@ -21,7 +21,7 @@ spec:
       valueFiles:
       - $values/gitops/management/networking/ingress/ingress-nginx-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
-    targetRevision: main
+    targetRevision: joaquin.dev
     ref: values
   syncPolicy:
     automated:

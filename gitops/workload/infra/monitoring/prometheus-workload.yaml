@@ -29,12 +29,12 @@ spec:
                   region: westeurope
                   cluster: {{name}}
                 remoteWrite:
-                - url: "http://receive.thanos.kube101.dev/api/v1/receive"
+                - url: "http://receive.thanos.joaquin.dev/api/v1/receive"
                   name: Thanos
           valueFiles:
           - $values/gitops/workload/infra/monitoring/prometheus-workload-values.yaml
       - repoURL: https://github.com/joaquinrz/capi-gitops.git
-        targetRevision: main
+        targetRevision: joaquin.dev
         ref: values
       destination:
         server: '{{server}}'

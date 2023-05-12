@@ -1,4 +1,4 @@
-_: &email joaquin@kube101.dev
+_: &email joaquin@joaquin.dev
 _: &solvers
 - http01:
     ingress:

@@ -6,5 +6,5 @@ azure:
 provider: azure
 txtOwnerId: "management"
 domainFilters:
-- kube101.dev
+- joaquin.dev
 

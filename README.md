@@ -36,7 +36,7 @@ export LOCATION=southcentralus
 export IDENTITY_NAME=gitops$RANDOM
 export NODE_COUNT=2
 export AZ_AKS_VERSION=1.25.6
-export AZURE_DNS_ZONE=kube101.dev
+export AZURE_DNS_ZONE=joaquin.dev
 export AZURE_DNS_ZONE_RESOURCE_GROUP=dns
 ```
 

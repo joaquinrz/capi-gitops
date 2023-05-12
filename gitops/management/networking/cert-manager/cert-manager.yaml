@@ -21,7 +21,7 @@ spec:
       valueFiles:
       - $values/gitops/management/networking/cert-manager/cert-manager-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
-    targetRevision: main
+    targetRevision: joaquin.dev
     ref: values
   syncPolicy:
     automated:
@@ -54,7 +54,7 @@ spec:
       valueFiles:
       - $values/gitops/management/networking/cert-manager/cluster-issuer-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
-    targetRevision: main
+    targetRevision: joaquin.dev
     ref: values
   syncPolicy:
     automated:

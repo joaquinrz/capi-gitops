@@ -21,7 +21,7 @@ spec:
       valueFiles:
       - $values/gitops/management/monitoring/grafana/grafana-values.yaml
   - repoURL: https://github.com/joaquinrz/capi-gitops.git
-    targetRevision: main
+    targetRevision: joaquin.dev
     ref: values
   syncPolicy:
     automated:
@@ -48,7 +48,7 @@ spec:
   project: infra
   source:
     path: "gitops/management/monitoring/dashboards"
-    targetRevision: main
+    targetRevision: joaquin.dev
     directory:
       recurse: true
     repoURL: https://github.com/joaquinrz/capi-gitops.git
