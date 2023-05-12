@@ -9,13 +9,7 @@ spec:
       elements:
       - cluster: management
         url: https://kubernetes.default.svc
-        workload-cluster: vc5
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: vc6
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: vc7     
+        workload-cluster: vcminion1  
   template:
     metadata:
       name: '{{workload-cluster}}'
