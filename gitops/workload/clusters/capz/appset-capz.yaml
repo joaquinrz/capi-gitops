@@ -9,13 +9,7 @@ spec:
       elements:
       - cluster: management
         url: https://kubernetes.default.svc
-        workload-cluster: minion1
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: minion2
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: minion3
+        workload-cluster: jminion1
   template:
     metadata:
       name: '{{workload-cluster}}'
