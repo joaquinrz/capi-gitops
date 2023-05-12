@@ -31,7 +31,7 @@ export AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 az account set --subscription $AZURE_SUBSCRIPTION_ID
 
 export CLUSTER_RG=management
-export CLUSTER_NAME=gru
+export CLUSTER_NAME=grujoaquin
 export LOCATION=southcentralus
 export IDENTITY_NAME=gitops$RANDOM
 export NODE_COUNT=2
