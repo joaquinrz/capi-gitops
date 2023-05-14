@@ -7,9 +7,6 @@ spec:
   generators:
   - list:
       elements:
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: jminion1
   template:
     metadata:
       name: '{{workload-cluster}}'

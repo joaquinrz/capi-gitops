@@ -6,13 +6,7 @@ metadata:
 spec:
   generators:
   - list:
-      elements:
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: vcminionj1
-      - cluster: management
-        url: https://kubernetes.default.svc
-        workload-cluster: vcminionj2     
+      elements:   
   template:
     metadata:
       name: '{{workload-cluster}}'
